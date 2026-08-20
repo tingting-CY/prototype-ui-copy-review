@@ -43,7 +43,7 @@
 
 引用外部来源时，请同步更新 [references/source-register.md](references/source-register.md)，并记录来源 ID、名称、公开可访问地址、提取日期、覆盖范围、提炼状态和维护规则。只有确认可公开引用的地址才可写入该文件。
 
-内部来源、受限页面或未获授权的材料不得公开 URL、正文、截图、账号信息或访问路径。此类信息只能以来源编号、概括性名称、提取日期、覆盖范围和“链接不公开”的脱敏描述登记；在公开仓库中不得通过提交记录、Issue、PR 描述或附件重新暴露。
+内部来源、受限页面或未获授权的材料不得公开 URL、正文、截图、账号信息或访问路径。此类信息只能以来源编号、概括性名称、提取日期、覆盖范围和“链接不公开”的脱敏描述登记；在公开仓库中不得通过提交记录、Issue、PR 描述或附件重新暴露。`scripts/validate_skill_consistency.py` 会把内部主机、内网路径、私有网段 IP 与机器专属 home 目录判为错误。
 
 ## 文档与版本同步
 
@@ -63,7 +63,8 @@
 
 ```bash
 python3 scripts/validate_skill_consistency.py --strict
-python3 /home/ubuntu/skills/skill-creator/scripts/quick_validate.py prototype-ui-copy-review
+# SKILL_CREATOR 指向本机 anthropics/skills 仓库中的 skills/skill-creator 目录
+python3 "$SKILL_CREATOR/scripts/quick_validate.py" .
 ```
 
 请同时检查以下内容：
@@ -74,6 +75,8 @@ git status --short
 ```
 
 若新增或修改 Python 逻辑，请至少运行与变更直接相关的代表性用例；如果校验脚本本身的检查范围变化，请在 PR 中说明新增或移除的检查项。
+
+若修改了 `SKILL.md`、审查流程或 description，请用 [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) 按 `evals/evals.json` 对比新旧版本的输出，并用 `evals/trigger-eval.json` 复核触发准确率；新增审查能力时同步补充用例与断言。
 
 ## 提交与 Pull Request
 

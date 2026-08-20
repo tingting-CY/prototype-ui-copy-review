@@ -14,7 +14,7 @@
 | 页面级审查配置 | 可按任务或页面启用、跳过或仅提示 `PX-`、`SPT-`、跨页面检查、规范缺口与修改清单模块。 |
 | 维度确认引导 | 未指定范围时，先以 A–F 菜单确认检查维度或推荐组合，减少无关结论。 |
 | 规范治理 | 以 `UC-` 清单记录未被现有规则覆盖的真实场景，帮助团队持续维护规范。 |
-| 可重复校验 | 内置无第三方依赖的结构一致性校验脚本，用于检查资源路由、链接、版本与来源登记。 |
+| 可重复校验 | 内置无第三方依赖的结构一致性校验脚本，检查资源路由、链接、版本、来源登记、回归用例，并扫描内部链接与机器专属路径。 |
 
 ## 适用范围
 
@@ -62,7 +62,10 @@
 │   ├── README.md                    # 完整使用说明
 │   └── VERSION_HISTORY.md           # Skill 功能迭代记录
 ├── scripts/
-│   └── validate_skill_consistency.py# 本地一致性校验
+│   └── validate_skill_consistency.py# 本地一致性与敏感信息校验
+├── evals/
+│   ├── evals.json                   # skill-creator 回归用例（含断言）
+│   └── trigger-eval.json            # description 触发准确率测试集
 ├── CONTRIBUTING.md                  # 贡献规则与提交流程
 └── .gitignore
 ```
@@ -73,10 +76,11 @@
 
 ```bash
 python3 scripts/validate_skill_consistency.py --strict
-python3 /home/ubuntu/skills/skill-creator/scripts/quick_validate.py prototype-ui-copy-review
+# SKILL_CREATOR 指向本机 anthropics/skills 仓库中的 skills/skill-creator 目录
+python3 "$SKILL_CREATOR/scripts/quick_validate.py" .
 ```
 
-第一项检查必需文件、资源路由、本地链接、版本同步和来源登记；第二项校验 Skill 基础结构。若修改影响用户可见能力、规则范围、使用方式或限制，还必须同步更新 [docs/README.md](docs/README.md) 与 [docs/VERSION_HISTORY.md](docs/VERSION_HISTORY.md)。
+第一项检查必需文件、资源路由、本地链接、版本同步、来源登记、回归用例，并扫描内部链接与机器专属路径；第二项校验 Skill 基础结构。修改 `SKILL.md`、审查流程或 description 后，建议用 [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) 按 `evals/evals.json` 跑一轮新旧版本对比，再按 `evals/trigger-eval.json` 检查 description 的触发准确率。若修改影响用户可见能力、规则范围、使用方式或限制，还必须同步更新 [docs/README.md](docs/README.md) 与 [docs/VERSION_HISTORY.md](docs/VERSION_HISTORY.md)。
 
 ## 贡献与来源边界
 
