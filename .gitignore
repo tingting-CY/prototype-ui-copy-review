@@ -1,0 +1,12 @@
+# Python bytecode and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local environments and tooling state
+.venv/
+.env
+.DS_Store
+
+# Generated reports and logs
+*.log
