@@ -2,7 +2,7 @@
  * Design: 留白校样 — 数字瑞士极简主义，近白画布、无衬线排版、朱砂修订点缀。
  * Keep one light theme, generous negative space, two primary actions, and one real interactive workbench.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -71,7 +71,13 @@ export default function Home() {
   const [hasRun, setHasRun] = useState(false);
   const [copied, setCopied] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pageReady, setPageReady] = useState(false);
   const answers = useMemo(() => reviewCopy(sourceText), [sourceText]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setPageReady(true), 60);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const copyCommand = async () => {
     await navigator.clipboard.writeText(`git clone ${REPOSITORY}.git`);
@@ -80,7 +86,8 @@ export default function Home() {
   };
 
   return (
-    <main className="quiet-shell">
+    <main className={`quiet-shell ${pageReady ? "is-ready" : ""}`}>
+      <div className="page-loader" aria-hidden="true"><span /></div>
       <header className="quiet-nav">
         <a className="brand" href="#top" aria-label="文案校样首页">
           <img src="assets/ui-copy-review-logo.webp" alt="" />
@@ -101,7 +108,7 @@ export default function Home() {
           <p className="hero-lead">面向原型、截图和真实页面流程的中文文案审校工具。发现问题，说明依据，直接给出可落地的改法。</p>
           <p className="proof-tag"><b>COPY-001</b><span>凭感觉写</span><i>→</i><span>按规则改</span></p>
           <div className="hero-actions">
-            <a className="button primary" href={RELEASE_DOWNLOAD}><Download size={17} /> 下载 Release · v1.11.0</a>
+            <a className="button primary release-cta" href={RELEASE_DOWNLOAD}><Download size={17} /> 下载 Release · v1.11.0</a>
             <a className="button secondary" href="#demo">直接检查一条文案 <ArrowDownRight size={17} /></a>
           </div>
         </div>
@@ -153,7 +160,7 @@ export default function Home() {
       </section>
 
       <section id="install" className="section frame install-section">
-        <div className="install-copy"><p className="section-number">04 / INSTALL</p><h2>下载完整 Release，<br />保留完整目录。</h2><p>主流程、规则库、模板、回归用例和校验脚本彼此关联。请下载完整安装包，而非单独复制文件。</p><div className="install-actions"><a className="button primary" href={RELEASE_DOWNLOAD}><Download size={17} /> 下载 Release · v1.11.0</a><a className="plain-link" href={RELEASE_PAGE} target="_blank" rel="noreferrer">查看更新说明 <ArrowUpRight size={15} /></a></div><p className="release-note"><span>最新版</span> 完整 `.skill` 安装包，附带 SHA-256 校验文件。</p></div>
+        <div className="install-copy"><p className="section-number">04 / INSTALL</p><h2>下载完整 Release，<br />保留完整目录。</h2><p>主流程、规则库、模板、回归用例和校验脚本彼此关联。请下载完整安装包，而非单独复制文件。</p><div className="install-actions"><a className="button primary release-cta" href={RELEASE_DOWNLOAD}><Download size={17} /> 下载 Release · v1.11.0</a><a className="plain-link" href={RELEASE_PAGE} target="_blank" rel="noreferrer">查看更新说明 <ArrowUpRight size={15} /></a></div><p className="release-note"><span>最新版</span> 完整 `.skill` 安装包，附带 SHA-256 校验文件。</p></div>
         <div className="command-block"><p>也可以从源码克隆</p><code><b>$</b> git clone {REPOSITORY}.git</code><button onClick={copyCommand}>{copied ? <Check size={15} /> : <Copy size={15} />}{copied ? "已复制" : "复制命令"}</button></div>
       </section>
 
