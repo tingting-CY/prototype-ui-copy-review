@@ -9,6 +9,8 @@
   {"query": "把这个页面的文案问题按 P0-P3 分个级，顺便列一下哪些场景现在的规范还没覆盖到，我要拿去补设计规范", "should_trigger": true},
   {"query": "原型里“确定”按钮到处都是，帮我看看哪些删除/发布弹窗该改成具体动作词，给出改法和规则编号", "should_trigger": true},
   {"query": "ui copy review pls: attached wireframe is in chinese (zh-CN), need punctuation + terminology consistency check and a markdown change list for the devs", "should_trigger": true},
+  {"query": "删除确认弹窗按钮写‘确定’合规吗？不要报告，直接说有没有问题以及怎么改。", "should_trigger": true},
+  {"query": "请直接检查这三条界面文案是否规范：正在加载...；操作成功；确定删除？", "should_trigger": true},
   {"query": "把这个页面的中文文案翻译成英文，术语保持一致，输出一份中英对照表给本地化同学", "should_trigger": false},
   {"query": "帮我写一段 App 首页 banner 的营销文案，要有感染力，突出“新用户首单立减”", "should_trigger": false},
   {"query": "这个弹窗的按钮颜色和间距看起来不对，左右两个按钮一个 32px 一个 36px，帮我看看视觉上还有什么问题", "should_trigger": false},

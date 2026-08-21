@@ -56,6 +56,20 @@
         {"id": "no_findings_yet", "text": "未在确认前输出审查结论（无 COPY- 条目、无“修改为”字段）", "check": "regex_none_all", "patterns": ["COPY-\\d{3}", "修改为[：:]"]},
         {"id": "no_internal_codes_in_menu", "text": "菜单不要求用户理解内部规则编号（不出现 HF-/PX-/SPT- 编号）", "check": "regex_none_all", "patterns": ["HF-[A-Z]{3}-\\d{2}", "PX-[A-Z]{2,5}-\\d{2}", "SPT-[A-Z]{3}-\\d{2}"]}
       ]
+    },
+    {
+      "id": 3,
+      "name": "single-copy-direct-qa",
+      "prompt": "请直接判断以下三条 UI 文案是否符合规范，不要生成完整报告或修改清单：\n1. 加载提示：正在加载...\n2. 删除确认弹窗按钮：确定\n3. 成功提示：操作成功",
+      "expected_output": "不追问 A–F 维度，也不输出 P0–P3、COPY- 或完整报告。按输入顺序逐条输出结论、依据和建议：加载提示捕获半角省略号（HF-PUN-05）；删除确认弹窗按钮识别为泛化动作并建议使用具体动作（HF-CMP-09 或等效说明）；“操作成功”在未给出对象和动作时标为待确认，不能虚构业务语义。",
+      "files": [],
+      "assertions": [
+        {"id": "direct_answer_fields", "text": "直接问答包含结论、依据和建议字段", "check": "regex_all", "patterns": ["结论", "依据", "建议"]},
+        {"id": "no_full_report_artifacts", "text": "直接问答不输出完整审查产物", "check": "regex_none_all", "patterns": ["COPY-\\d{3}", "P0", "P1", "P2", "P3", "审查维度确认"]},
+        {"id": "ellipsis_caught", "text": "捕获加载提示中的半角省略号", "check": "regex_any", "patterns": ["HF-PUN-05", "正在加载……"]},
+        {"id": "delete_button_caught", "text": "识别删除确认中泛化“确定”按钮", "check": "regex_any", "patterns": ["HF-CMP-09", "删除", "具体动作"]},
+        {"id": "generic_success_pending", "text": "未给出对象和动作时将“操作成功”标为待确认", "check": "regex_all", "patterns": ["操作成功", "待确认"]}
+      ]
     }
   ]
 }
