@@ -62,6 +62,7 @@ h1 em { color: var(--vermilion); font-style: normal; }
 .button-quiet:hover { background: #fffaf4; }
 .button-vermilion { color: #fff; background: var(--vermilion); box-shadow: 0 8px 16px rgba(217,77,55,.18); }
 .button-vermilion:hover { background: var(--vermilion-deep); }
+.release-download { letter-spacing: -.01em; }
 .hero-metadata { display: flex; flex-wrap: wrap; gap: 17px; margin-top: 26px; color: var(--ink-soft); font-size: 12px; }
 .hero-metadata span { display: flex; align-items: center; gap: 6px; }
 .hero-metadata svg { color: var(--vermilion); }
@@ -156,6 +157,8 @@ textarea:focus { border-top-color: var(--vermilion); }
 .install-copy h2 { margin: 21px 0 22px; }
 .install-copy > p { max-width: 465px; color: var(--ink-soft); font-size: 14px; line-height: 1.85; }
 .install-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.release-note { display: flex; align-items: center; gap: 8px; margin-top: 15px; color: var(--ink-soft); font-size: 11px; line-height: 1.65; }
+.release-note span { padding: 2px 5px; color: var(--vermilion-deep); font-family: var(--mono); font-size: 9px; letter-spacing: .04em; background: rgba(217,77,55,.08); border-left: 2px solid var(--vermilion); }
 .install-terminal { position: relative; min-height: 233px; overflow: hidden; background: #292824; border-top: 3px solid var(--vermilion); box-shadow: 12px 12px 0 var(--mint); }
 .terminal-top { display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; background: #35332e; }
 .terminal-top span { width: 8px; height: 8px; border-radius: 50%; background: #8b877e; }

@@ -34,6 +34,8 @@ type ReviewAnswer = {
 const REPOSITORY = "https://github.com/tingting-CY/prototype-ui-copy-review";
 const DOCUMENTATION = `${REPOSITORY}/blob/main/docs/README.md`;
 const SOURCE_ZIP = `${REPOSITORY}/archive/refs/heads/main.zip`;
+const RELEASE_PAGE = `${REPOSITORY}/releases/tag/v1.11.0`;
+const RELEASE_DOWNLOAD = `${REPOSITORY}/releases/download/v1.11.0/prototype-ui-copy-review-v1.11.0.skill`;
 
 const DEFAULT_COPY = "正在加载...\n操作成功\n删除确认弹窗按钮：确定";
 
@@ -153,6 +155,7 @@ export default function Home() {
           <div className="hero-proofline"><b>COPY-001</b><span>凭感觉写 <i>→</i> 按规则改</span></div>
           <p className="hero-lead">面向原型、截图和真实页面流程的中文文案审校工具。发现问题、给出依据、直接交付可落地的改法。</p>
           <div className="hero-actions">
+            <a className="button button-vermilion release-download" href={RELEASE_DOWNLOAD}><Download size={17} /> 下载 Release · v1.11.0</a>
             <a className="button button-ink" href="#demo"><Play size={16} fill="currentColor" /> 直接检查一条文案</a>
             <a className="button button-quiet" href={REPOSITORY} target="_blank" rel="noreferrer">查看源码 <ArrowUpRight size={16} /></a>
           </div>
@@ -274,9 +277,10 @@ export default function Home() {
             <h2>保留完整目录，<br />让规则按需加载。</h2>
             <p>Skill 的主流程、规则库、提示词模板、回归用例和校验脚本彼此关联。请下载或克隆完整仓库，不要单独复制某一个文件。</p>
             <div className="install-actions">
-              <a className="button button-vermilion" href={SOURCE_ZIP}><Download size={17} /> 下载完整源码包</a>
-              <a className="button button-quiet" href={DOCUMENTATION} target="_blank" rel="noreferrer"><BookOpen size={17} /> 查看安装说明</a>
+              <a className="button button-vermilion release-download" href={RELEASE_DOWNLOAD}><Download size={17} /> 下载 Release · v1.11.0</a>
+              <a className="button button-quiet" href={RELEASE_PAGE} target="_blank" rel="noreferrer"><BookOpen size={17} /> 查看更新说明</a>
             </div>
+            <p className="release-note"><span>最新版</span> 完整 `.skill` 安装包，内含规则库、模板、校验脚本与回归用例。</p>
           </div>
           <div className="install-terminal">
             <div className="terminal-top"><span /><span /><span /><b>获取 Skill</b></div>
