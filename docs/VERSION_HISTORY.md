@@ -1,7 +1,7 @@
 # 原型界面文案审查 Skill：版本更新记录
 
 > 文档状态：当前生效  
-> 当前版本：**v1.9.1**
+> 当前版本：**v1.10.0**
 > 更新日期：2026-08-20（GMT+8）  
 > 适用对象：`prototype-ui-copy-review` Skill 及其参考规则、模板和来源登记。
 
@@ -15,6 +15,7 @@
 
 | 版本 | 日期 | 类型 | 核心变化 | 兼容性 |
 |---|---|---|---|---|
+| v1.10.0 | 2026-08-20 | 次版本 | 按 skill-creator 方法优化触发描述与主文件结构，补齐 SPT 来源脱敏，新增回归用例、触发测试集与敏感信息校验。 | 向后兼容；审查规则、分级与输出格式不变。 |
 | v1.9.1 | 2026-08-20 | 修订版本 | 为公开仓库新增根目录 README 与贡献指南，并脱敏内部来源链接及页面元数据。 | 向后兼容；不改变审查规则、输出行为或已提炼范围。 |
 | v1.9.0 | 2026-08-20 | 次版本 | 新增审查前维度确认与推荐组合，未指定范围时先引导用户选择检查项。 | 向后兼容；明确“完整审查”或具体维度时仍直接执行。 |
 | v1.8.0 | 2026-08-20 | 次版本 | 新增任务级与页面级审查项选择，支持跳过不适用的 PX、SPT、跨页面检查、规范缺口或修改清单。 | 向后兼容；默认 `auto` 行为保持既有按需加载逻辑。 |
@@ -32,6 +33,24 @@
 ---
 
 ## 详细更新记录
+
+### v1.10.0 · skill-creator 优化：触发描述、主文件瘦身、回归用例与敏感信息校验
+
+**变更类型。** 次版本。
+
+**变更原因。** 按 anthropics/skills 的 skill-creator 方法复查本 Skill：description 只描述能力、缺少触发语境，用户说“看看这个页面文案”或只贴截图时可能不触发；`SKILL.md` 常驻加载的维护章节与 `CONTRIBUTING.md` 重复；v1.9.1 的来源脱敏遗漏了 `system-prompt-patterns.md` 中的内部地址与页面元数据；根目录 README 与贡献指南写死了维护者本机的 skill-creator 路径；仓库没有可重复运行的回归用例。
+
+**新增或修改内容。** 重写 `SKILL.md` 的 description，补充触发场景（看看/检查/审查/把关/review、文案规范、提示信息规范、PaletX/ZTE、给开发的替换清单）与不适用场景（翻译、营销文案、视觉交互走查、i18n 资源整理）；在“分级与输出”增加单条问题的写法示例；将“Skill 维护与文档同步”收敛为指向 `CONTRIBUTING.md` 的简短段落，并把维护者资源合并为资源路由表的一行。`references/system-prompt-patterns.md` 移除内部来源地址、页面修改时间与 References 段，使用状态统一为“部分已提炼”；`references/source-register.md` 说明两类规则文件的位置。新增 `evals/evals.json`（3 条带断言的回归用例：完整审查并出极简清单、多页面跳过 PX 只查 HF/SPT、模糊请求先出维度菜单）与 `evals/trigger-eval.json`（20 条应触发/不应触发查询）。`scripts/validate_skill_consistency.py` 新增根目录 README/CONTRIBUTING 与 `evals/evals.json` 必需文件检查、description 长度与尖括号检查、`references/` 与根目录文档的链接检查、回归用例结构检查，以及内部主机/内网路径/私有网段 IP/机器专属 home 目录的敏感内容扫描；修正此前部分检查在已有错误时仍报“通过”的问题。根目录 `README.md`、`CONTRIBUTING.md` 改用 `$SKILL_CREATOR` 变量描述 quick_validate 路径，并补充回归与触发测试说明。
+
+**行为变化。** 审查规则、优先级、P0–P3 分级、模块配置与输出格式不变。触发层面：对未说“审查”但明确要求检查页面文案、截图或原型的请求更稳定地触发；对翻译、营销文案、视觉走查等请求明确不触发。校验层面：公开仓库中再次出现内部链接或机器路径会被脚本判为错误。
+
+**受影响文件。** `SKILL.md`、`README.md`、`CONTRIBUTING.md`、`references/system-prompt-patterns.md`、`references/source-register.md`、`scripts/validate_skill_consistency.py`、`evals/evals.json`、`evals/trigger-eval.json`、`docs/README.md`、`docs/VERSION_HISTORY.md`。
+
+**兼容性与迁移。** 向后兼容。既有调用、规则编号、来源提炼范围与清单格式不变；维护者需保证 `evals/evals.json` 与根目录 README/CONTRIBUTING 存在，否则校验脚本报错。
+
+**来源与边界。** 不新增规则来源。`SRC-SPT-PATTERN-001` 继续为“部分已提炼”的内部来源，仅保留来源编号、提取日期、覆盖范围与脱敏描述。
+
+**校验状态。** 已通过 `python3 scripts/validate_skill_consistency.py --strict`（9 项通过）与 skill-creator `quick_validate.py`。skill-creator 回归评测：3 条用例共 29 条断言，旧版与新版均全部通过。触发测试（20 条查询 × 3 次，每个 description 独立 project root 串行运行）：旧描述应触发 28/30、误触发 0/30；新描述应触发 30/30、误触发 0/30，两者均 20/20 通过阈值。
 
 ### v1.9.1 · 公开仓库入口与来源登记脱敏
 

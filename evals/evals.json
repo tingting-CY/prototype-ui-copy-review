@@ -1,0 +1,61 @@
+{
+  "skill_name": "prototype-ui-copy-review",
+  "evals": [
+    {
+      "id": 0,
+      "name": "full-review-minimal-change-list",
+      "prompt": "下面是我们后台「API 密钥管理」页面的全部可见文案（按区域整理，开发从原型里抠出来的）。请完整审查这个页面的文案，并生成给开发直接替换的 Markdown 清单。\n\n【页面标题】API密钥管理页面\n【面包屑】系统设置 / 管理密钥 / 日志\n【搜索框占位符】请输入\n【表头】名称 | 描述 | api key | 创建时间 | 状态 | 操作\n【状态列取值】已启用 / 关闭\n【操作列按钮】编辑 | 删除\n【新建按钮】新建API 密钥\n【新建弹窗标题】创建 API 密钥\n【新建弹窗字段】名称：（占位符：请输入，保存后不可修改）｜ 描述（占位符：请输入描述）\n【新建弹窗按钮】确定 | 取消操作\n【名称为空时的校验提示】系统异常\n【保存成功 Toast】操作成功\n【加载中】正在加载...\n【搜索无结果】暂无数据\n【删除弹窗标题】确定删除？\n【删除弹窗正文】（无）\n【删除弹窗按钮】确定 | 取消\n【创建时间示例】2026/8/1 9:5",
+      "expected_output": "先声明审查范围与模块状态（HF 启用、SPT 因出现提示信息而启用、PX 未指定故不加载），然后按 P0–P3 列出带 HF-/SPT- 编号的问题，并输出给开发直接替换的极简表格清单（COPY- 编号、原文、修改后文案、依据）。至少捕获：删除弹窗泛化按钮与缺少后果说明、占位符承担长期说明、省略号半角、泛化成功提示、用系统异常表述校验错误、搜索无结果误用暂无数据、页标题带“页面”、API 密钥写法不一致、取消/取消操作不一致。api key 列名、状态词“关闭”等语义不明项进入待确认而非直接断定。",
+      "files": [],
+      "assertions": [
+        {"id": "scope_declared", "text": "报告开头声明了审查范围/模块配置，并说明 PX 未启用或未加载", "check": "regex_all", "patterns": ["(审查范围|模块配置|审查维度|范围与限制)", "PX[^\\n]{0,60}(未启用|未加载|已跳过|跳过|不适用|未指定|auto)"]},
+        {"id": "hf_rules_cited", "text": "至少引用 5 个不同的 HF- 规则编号作为依据", "check": "distinct_min", "pattern": "HF-[A-Z]{3}-\\d{2}", "min": 5},
+        {"id": "no_px_rules", "text": "未指定 PaletX/ZTE 时不以 PX- 规则编号作为判定依据", "check": "regex_none", "pattern": "PX-[A-Z]{2,5}-\\d{2}"},
+        {"id": "change_list_present", "text": "生成了带 COPY- 编号的修改清单（至少 5 条）", "check": "distinct_min", "pattern": "COPY-\\d{3}", "min": 5},
+        {"id": "minimal_table_format", "text": "清单采用“给开发直接替换”的极简表格（表头含原文与修改后文案）", "check": "regex_all", "patterns": ["\\|\\s*原文\\s*\\|", "修改后"]},
+        {"id": "delete_dialog_caught", "text": "捕获删除弹窗泛化按钮/缺少后果说明（HF-CMP-09 或 HF-STA-06）", "check": "regex_any", "patterns": ["HF-CMP-09", "HF-STA-06"]},
+        {"id": "ellipsis_caught", "text": "捕获“正在加载...”半角省略号（HF-PUN-05）", "check": "regex_any", "patterns": ["HF-PUN-05", "正在加载……"]},
+        {"id": "placeholder_misuse_caught", "text": "捕获占位符承担长期说明（HF-CMP-04）", "check": "regex_any", "patterns": ["HF-CMP-04"]},
+        {"id": "generic_success_caught", "text": "捕获泛化成功提示“操作成功”（HF-STA-03 或 SPT-PAT-01）", "check": "regex_any", "patterns": ["HF-STA-03", "SPT-PAT-01"]},
+        {"id": "system_error_misuse_caught", "text": "捕获用“系统异常”表述校验错误（HF-FBK-02 / HF-STA-04 / SPT-ACC-01）", "check": "regex_any", "patterns": ["HF-FBK-02", "HF-STA-04", "SPT-ACC-01"]},
+        {"id": "empty_state_caught", "text": "捕获搜索无结果误用“暂无数据”（HF-FBK-04 或 HF-STA-05）", "check": "regex_any", "patterns": ["HF-FBK-04", "HF-STA-05"]},
+        {"id": "pending_items_present", "text": "对语义不明项（如 api key 列名、状态词）设置待确认/需确认而非直接断定", "check": "regex_any", "patterns": ["待确认", "需确认"]}
+      ]
+    },
+    {
+      "id": 1,
+      "name": "multi-page-skip-px-spt-only",
+      "prompt": "这是「成员邀请」流程三张截图里的文字，我按截图抄下来了。本页不涉及 PX 规范，跳过 PX；只查高频文案问题和提示信息，输出按页面分组的修改清单。\n\n截图 1 · 成员管理列表页\n- 页面标题：成员管理\n- 主按钮：添加用户\n- 表头：姓名 | 邮箱 | 角色 | 状态 | 操作\n- 状态取值：已启用 / 开启 / 禁用\n- 操作：移除 | 编辑\n- 空状态：暂无数据\n\n截图 2 · 邀请弹窗\n- 标题：邀请人员\n- 字段：邮箱地址（占位符：name@example.com）；角色（占位符：请选择）\n- 说明文字：邀请后用户将收到邮件,请确保邮箱正确\n- 按钮：确定 | 取消\n- 邮箱格式错误时的提示：输入错误\n\n截图 3 · 结果反馈\n- 成功 Toast：人员已创建\n- 失败 Toast：操作失败\n- 邀请发送中：邀请中...\n- 移除成员确认弹窗：标题「删除用户」，正文「确定删除？」，按钮「确定 | 取消」",
+      "expected_output": "范围声明中标明 PX 已跳过、HF 与 SPT 启用、跨页面核对启用；不出现任何 PX- 编号。跨页面把 成员/用户/人员 与 移除/删除 的术语漂移合并为系统性问题（HF-TERM-01 / HF-TERM-06），捕获状态词混用（HF-STA-09）、半角逗号（HF-PUN-03）、半角省略号（HF-PUN-05）、校验提示不指向规则（HF-FBK-01）、失败 Toast 缺少原因（SPT-ACC-01 / HF-STA-04）、删除弹窗泛化按钮（HF-CMP-09 / HF-STA-06）。修改清单按“列表页 / 邀请弹窗 / 结果反馈”分组，使用 COPY- 编号。",
+      "files": [],
+      "assertions": [
+        {"id": "px_skipped_declared", "text": "范围声明中标明 PX 已按用户要求跳过", "check": "regex_any", "patterns": ["PX[^\\n]{0,40}(已跳过|跳过|off|未审查|不审查)"]},
+        {"id": "no_px_rules", "text": "输出中不出现任何 PX- 规则编号", "check": "regex_none", "pattern": "PX-[A-Z]{2,5}-\\d{2}"},
+        {"id": "spt_enabled", "text": "提示信息模块已启用，引用了 SPT- 规则编号", "check": "regex_any", "patterns": ["SPT-[A-Z]{3}-\\d{2}"]},
+        {"id": "hf_rules_cited", "text": "至少引用 4 个不同的 HF- 规则编号", "check": "distinct_min", "pattern": "HF-[A-Z]{3}-\\d{2}", "min": 4},
+        {"id": "cross_page_term_drift", "text": "跨页面识别 成员/用户/人员 术语漂移并引用 HF-TERM-01", "check": "regex_all", "patterns": ["HF-TERM-01", "成员", "用户", "人员"]},
+        {"id": "remove_vs_delete", "text": "识别“移除”与“删除”不一致（HF-TERM-06 或明确指出统一）", "check": "regex_any", "patterns": ["HF-TERM-06", "移除[^\\n]{0,60}删除[^\\n]{0,60}(统一|不一致|同一)", "删除[^\\n]{0,60}移除[^\\n]{0,60}(统一|不一致|同一)"]},
+        {"id": "grouped_by_page", "text": "修改清单按页面/截图分组（存在以页面名命名的标题）", "check": "regex_any", "patterns": ["(?m)^#{1,4} .*(列表页|邀请弹窗|结果反馈|截图 ?[123])"]},
+        {"id": "change_list_present", "text": "生成了带 COPY- 编号的修改清单（至少 4 条）", "check": "distinct_min", "pattern": "COPY-\\d{3}", "min": 4},
+        {"id": "halfwidth_comma_caught", "text": "捕获说明文字中的半角逗号（HF-PUN-03）", "check": "regex_any", "patterns": ["HF-PUN-03"]},
+        {"id": "ellipsis_caught", "text": "捕获“邀请中...”半角省略号（HF-PUN-05）", "check": "regex_any", "patterns": ["HF-PUN-05", "邀请中……"]},
+        {"id": "failure_toast_no_reason", "text": "捕获失败 Toast 缺少原因与修复方式（SPT-ACC-01 / SPT-PAT-02 / HF-STA-04）", "check": "regex_any", "patterns": ["SPT-ACC-01", "SPT-PAT-02", "HF-STA-04"]},
+        {"id": "status_word_mix_caught", "text": "捕获 已启用/开启/禁用 状态词混用（HF-STA-09）", "check": "regex_any", "patterns": ["HF-STA-09"]}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "vague-request-dimension-menu",
+      "prompt": "帮我看看这个页面的文案\n\n【个人设置页】\n- 标题：个人设置\n- 分组：基本信息 / 安全设置 / 通知\n- 字段：昵称（占位符：请输入昵称）；手机号（选填）\n- 手机号为空时的提示：手机号不能为空\n- 开关：开启通知 / 通知已开启\n- 按钮：保存 | 取消操作\n- 保存成功提示：保存成功",
+      "expected_output": "用户只说“看看”而未指定维度，Skill 应停止审查，只发起一次维度确认：给出 A–F 菜单（基础文案与页面一致性 / 状态与提示信息 / 设计系统与品牌规范 / 跨页面流程一致性 / 规范缺口与治理建议 / Markdown 修改清单），根据材料含校验提示与成功提示推荐 A + B + F，并允许回复“完整审查”或“按推荐执行”。不输出问题清单、COPY- 条目或修改建议，菜单中不出现 HF-/PX-/SPT- 内部编号。",
+      "files": [],
+      "assertions": [
+        {"id": "menu_six_dimensions", "text": "给出了完整的 A–F 六个维度菜单", "check": "regex_all", "patterns": ["基础文案", "状态与提示", "设计系统", "跨页面", "规范缺口", "修改清单"]},
+        {"id": "recommendation_given", "text": "给出了基于材料信号的推荐组合", "check": "regex_any", "patterns": ["推荐", "建议先选"]},
+        {"id": "shortcut_replies_offered", "text": "提供“完整审查”或“按推荐执行”快捷回复", "check": "regex_any", "patterns": ["完整审查", "按推荐执行"]},
+        {"id": "no_findings_yet", "text": "未在确认前输出审查结论（无 COPY- 条目、无“修改为”字段）", "check": "regex_none_all", "patterns": ["COPY-\\d{3}", "修改为[：:]"]},
+        {"id": "no_internal_codes_in_menu", "text": "菜单不要求用户理解内部规则编号（不出现 HF-/PX-/SPT- 编号）", "check": "regex_none_all", "patterns": ["HF-[A-Z]{3}-\\d{2}", "PX-[A-Z]{2,5}-\\d{2}", "SPT-[A-Z]{3}-\\d{2}"]}
+      ]
+    }
+  ]
+}

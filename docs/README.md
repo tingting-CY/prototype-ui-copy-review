@@ -1,6 +1,6 @@
 # 原型界面文案审查 Skill
 
-> **版本：v1.9.1**
+> **版本：v1.10.0**
 > **用途：** 审查原型、截图、页面流程、文案清单与需求文档中的简体中文 UI 文案，并输出可直接交付团队处理的修改建议。
 
 ## 能力概览
@@ -114,8 +114,10 @@ Skill 适用于 Web、移动端、后台系统、小程序和桌面端的**用�
 | `references/review-scope-configuration.md` | 按任务或页面选择、跳过或仅提示审查模块。 |
 | `references/review-dimension-confirmation.md` | 用户未指定维度时，给出一次性确认菜单与推荐组合。 |
 | `docs/VERSION_HISTORY.md` | 了解版本与变更历史。 |
-| `scripts/validate_skill_consistency.py` | 修改 Skill 后预检文件存在性、内部链接、资源路由、版本同步与来源登记结构。 |
+| `scripts/validate_skill_consistency.py` | 修改 Skill 后预检文件存在性、内部链接、资源路由、版本同步、来源登记结构、回归用例与敏感信息。 |
+| `evals/evals.json` | 修改 Skill 后用 skill-creator 做新旧版本回归对比（维护者）。 |
+| `evals/trigger-eval.json` | 修改 description 后检查触发准确率（维护者）。 |
 
 ## 维护约定
 
-规则、模板、来源、输出行为或 Skill 主流程发生修改后，必须同步更新 `VERSION_HISTORY.md`；若影响用户可见能力、使用方式、规则范围或已知限制，也必须更新本 README。文档同步完成后，先运行 `python3 scripts/validate_skill_consistency.py`，再运行 Skill 结构校验。
+规则、模板、来源、输出行为或 Skill 主流程发生修改后，必须同步更新 `VERSION_HISTORY.md`；若影响用户可见能力、使用方式、规则范围或已知限制，也必须更新本 README。文档同步完成后，先运行 `python3 scripts/validate_skill_consistency.py --strict`（含内部链接与机器专属路径扫描），再运行 Skill 结构校验；涉及 `SKILL.md`、审查流程或 description 的改动，再用 skill-creator 按 `evals/` 做回归与触发测试。
