@@ -23,9 +23,30 @@
 
 它不替代业务、技术、安全、法务或品牌负责人的最终判断。对模糊、截断、无法访问或缺少业务定义的内容，Skill 会标注为“待确认”或“规范待维护项”，而非推断为确定性缺陷。
 
-## 快速使用
+## 安装
 
-将整个仓库目录作为一个 Skill 保留，勿单独复制 `SKILL.md` 或某个规则文件；主流程会按任务类型按需加载 `references/` 下的资源。
+请始终保留完整的 Skill 目录；不要仅复制 `SKILL.md`、某个规则文件或某个提示词模板。主流程会按任务按需加载 `references/`、`docs/`、`evals/` 与 `scripts/` 中的关联资源。
+
+| 方式 | 适用场景 | 操作 |
+|---|---|---|
+| Release 安装包 | 希望获得已打包、可核验的版本 | 下载最新版 [`prototype-ui-copy-review-v1.11.0.skill`](https://github.com/tingting-CY/prototype-ui-copy-review/releases/download/v1.11.0/prototype-ui-copy-review-v1.11.0.skill)，并同时下载 [SHA-256 校验文件](https://github.com/tingting-CY/prototype-ui-copy-review/releases/download/v1.11.0/prototype-ui-copy-review-v1.11.0.skill.sha256)。 |
+| Git 克隆 | 需要跟踪规则更新或参与维护 | 克隆仓库后，将整个 `prototype-ui-copy-review/` 目录作为一个本地 Skill 保留。 |
+
+```bash
+git clone https://github.com/tingting-CY/prototype-ui-copy-review.git
+```
+
+下载或克隆后，请按照所使用 AI 工具的本地 Skill 安装方式导入**完整目录**。本仓库不提供浏览器端执行入口；它应由支持本地 Skill 的宿主环境加载。
+
+## 使用模式
+
+| 模式 | 何时使用 | 返回内容 |
+|---|---|---|
+| 单条文案直接问答 | 一次提供 1–5 条明确 UI 文案，并直接询问是否合规 | 按输入顺序返回“结论、依据、建议”；不生成完整报告或修改清单。 |
+| 页面或流程审查 | 提供截图、原型、录屏、文案表格或需求文档 | 先确认审查维度，再按适用规则生成问题表与可执行修改建议。 |
+| 完整审查与清单 | 明确要求完整审查、交付评审材料或 Markdown 清单 | 按图片或页面聚合修改项；按需生成 `COPY-` 修改清单与 `UC-` 规范缺口列表。 |
+
+## 调用示例
 
 可直接使用以下请求作为起点：
 
@@ -43,7 +64,7 @@
 请直接检查：正在加载...；操作成功；确定删除？
 ```
 
-当仅提出“审查这个页面”而未说明范围时，Skill 会先给出一次性 A–F 检查维度菜单；也可以回复“按推荐执行”或“完整审查”。当一次仅发送一至五条明确 UI 文案并直接询问是否合规时，Skill 会跳过菜单，按输入顺序输出“结论、依据、建议”三项最小答案；缺少业务或组件语境时会标为“待确认”。完整调用说明见 [docs/README.md](docs/README.md)。
+当仅提出“审查这个页面”而未说明范围时，Skill 会先给出一次性 A–F 检查维度菜单；也可以回复“按推荐执行”或“完整审查”。当一次仅发送一至五条明确 UI 文案并直接询问是否合规时，Skill 会跳过菜单，按输入顺序输出“结论、依据、建议”三项最小答案；缺少业务或组件语境时会标为“待确认”。完整调用说明、配置协议和输出边界见 [docs/README.md](docs/README.md)。
 
 ## 审查维度与规则编号
 
@@ -78,12 +99,12 @@
 
 ## 本地校验
 
-每次修改 `SKILL.md`、规则、来源登记、模板、脚本或用户文档后，依次运行：
+每次修改 `SKILL.md`、规则、来源登记、模板、脚本或用户文档后，建议在包含本目录的 Skills 根目录中依次运行：
 
 ```bash
-python3 scripts/validate_skill_consistency.py --strict
-# SKILL_CREATOR 指向本机 anthropics/skills 仓库中的 skills/skill-creator 目录
-python3 "$SKILL_CREATOR/scripts/quick_validate.py" .
+python3 prototype-ui-copy-review/scripts/validate_skill_consistency.py --strict --root prototype-ui-copy-review
+# 若本机已安装 skill-creator，传入 Skill 目录名而不是当前目录。
+python3 /path/to/skill-creator/scripts/quick_validate.py prototype-ui-copy-review
 ```
 
 第一项检查必需文件、资源路由、本地链接、版本同步、来源登记、回归用例，并扫描内部链接与机器专属路径；第二项校验 Skill 基础结构。修改 `SKILL.md`、审查流程或 description 后，建议用 [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) 按 `evals/evals.json` 跑一轮新旧版本对比，再按 `evals/trigger-eval.json` 检查 description 的触发准确率。若修改影响用户可见能力、规则范围、使用方式或限制，还必须同步更新 [docs/README.md](docs/README.md) 与 [docs/VERSION_HISTORY.md](docs/VERSION_HISTORY.md)。
@@ -96,7 +117,7 @@ python3 "$SKILL_CREATOR/scripts/quick_validate.py" .
 
 ## 版本与发布
 
-Skill 的功能迭代记录维护在 [docs/VERSION_HISTORY.md](docs/VERSION_HISTORY.md)。仓库首个公开 Release 为 [v1.0.0](https://github.com/tingting-CY/prototype-ui-copy-review/releases/tag/v1.0.0)。
+Skill 的功能迭代记录维护在 [docs/VERSION_HISTORY.md](docs/VERSION_HISTORY.md)。最新可安装版本为 [v1.11.0](https://github.com/tingting-CY/prototype-ui-copy-review/releases/tag/v1.11.0)，其中包含完整 `.skill` 安装包与 SHA-256 校验文件；[v1.0.0](https://github.com/tingting-CY/prototype-ui-copy-review/releases/tag/v1.0.0) 保留为首个公开 Release 的历史记录。
 
 ## 许可证
 
