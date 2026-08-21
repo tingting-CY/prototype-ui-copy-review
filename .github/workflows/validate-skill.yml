@@ -1,0 +1,38 @@
+name: Validate Skill
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate Skill structure and public-source safety
+        run: python3 scripts/validate_skill_consistency.py --strict
+      - name: Validate evaluation JSON
+        run: |
+          python3 -m json.tool evals/evals.json > /dev/null
+          python3 -m json.tool evals/trigger-eval.json > /dev/null
+      - name: Validate showcase build
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: showcase/package-lock.json
+      - name: Build public showcase
+        working-directory: showcase
+        run: |
+          npm ci
+          npm run build

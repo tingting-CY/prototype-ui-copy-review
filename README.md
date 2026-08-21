@@ -45,6 +45,10 @@
 
 当仅提出“审查这个页面”而未说明范围时，Skill 会先给出一次性 A–F 检查维度菜单；也可以回复“按推荐执行”或“完整审查”。当一次仅发送一至五条明确 UI 文案并直接询问是否合规时，Skill 会跳过菜单，按输入顺序输出“结论、依据、建议”三项最小答案；缺少业务或组件语境时会标为“待确认”。完整调用说明见 [docs/README.md](docs/README.md)。
 
+## 公开展示站
+
+仓库附带一个面向访客的静态展示站，部署后可通过 [GitHub Pages](https://tingting-CY.github.io/prototype-ui-copy-review/) 访问。展示站演示单条文案直接问答、规则资产、完整审查流程与安装入口；浏览器内的交互仅用于演示，不会执行完整 Skill 或上传输入内容。其源码位于 [`showcase/README.md`](showcase/README.md)，部署工作流位于 [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml)。
+
 ## 审查维度与规则编号
 
 | 分类 | 标识 | 用途 |
@@ -71,6 +75,8 @@
 ├── evals/
 │   ├── evals.json                   # skill-creator 回归用例（含断言）
 │   └── trigger-eval.json            # description 触发准确率测试集
+├── showcase/                         # GitHub Pages 静态展示站源码与视觉资产
+├── .github/workflows/                # Skill 校验与 GitHub Pages 部署工作流
 ├── CONTRIBUTING.md                  # 贡献规则与提交流程
 └── .gitignore
 ```
