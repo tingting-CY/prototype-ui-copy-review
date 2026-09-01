@@ -1,0 +1,68 @@
+/* Ported verbatim from the Handhold design system bundle (components/forms/Button.jsx). */
+.hh-btn {
+  --_h: var(--control-h, 40px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--_h);
+  padding: 0 var(--space-5);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--t-control);
+  user-select: none;
+  text-decoration: none;
+}
+.hh-btn:focus-visible { outline: none; box-shadow: var(--ring-focus); }
+.hh-btn:disabled,
+.hh-btn[aria-disabled='true'] { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+.hh-btn svg { width: 1.05em; height: 1.05em; flex: none; }
+
+.hh-btn--sm {
+  --_h: var(--control-h-sm, 32px);
+  padding: 0 var(--space-4);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-sm);
+}
+.hh-btn--lg { --_h: var(--control-h-lg, 48px); padding: 0 var(--space-7); font-size: var(--text-lg); }
+.hh-btn--block { display: flex; width: 100%; }
+
+.hh-btn--primary { background: var(--primary-bg); color: var(--primary-fg); box-shadow: var(--shadow-xs); }
+.hh-btn--primary:hover { background: var(--primary-bg-hover); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.hh-btn--primary:active { transform: translateY(0); box-shadow: none; }
+
+.hh-btn--secondary {
+  background: var(--surface-card);
+  color: var(--text-strong);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-xs);
+}
+.hh-btn--secondary:hover { background: var(--surface-hover); transform: translateY(-1px); }
+.hh-btn--secondary:active { transform: translateY(0); }
+
+.hh-btn--ghost { background: transparent; color: var(--text-body); }
+.hh-btn--ghost:hover { background: var(--surface-hover); color: var(--text-strong); }
+
+.hh-btn--accent { background: var(--accent); color: #fff; box-shadow: var(--glow-violet); }
+.hh-btn--accent:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.hh-btn--accent:active { transform: translateY(0); }
+
+.hh-btn--orb {
+  color: #fff;
+  border: none;
+  background: var(--grad-orb-soft);
+  background-size: 160% 160%;
+  box-shadow: var(--glow-orb);
+}
+.hh-btn--orb:hover { background-position: 100% 50%; transform: translateY(-1px); }
+.hh-btn--orb:active { transform: translateY(0); }
+
+.hh-btn--danger { background: var(--danger-500); color: #fff; }
+.hh-btn--danger:hover { background: var(--danger-600); }

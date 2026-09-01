@@ -1,0 +1,13 @@
+/* ============================================================
+   Handhold — Radius tokens
+   Soft, generous rounding — friendly + premium.
+   ============================================================ */
+:root {
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;  /* default control radius */
+  --radius-lg:   16px;  /* cards                  */
+  --radius-xl:   22px;  /* panels, sheets         */
+  --radius-2xl:  30px;  /* hero surfaces          */
+  --radius-pill: 999px; /* pills, avatars, chips  */
+}

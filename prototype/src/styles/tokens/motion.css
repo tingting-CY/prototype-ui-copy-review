@@ -1,0 +1,27 @@
+/* ============================================================
+   Handhold — Motion tokens
+   Calm, assured, "white-glove" easing. Short fades & gentle
+   rises; no bounce on UI. The orb is the only thing that drifts.
+   ============================================================ */
+:root {
+  --dur-instant: 80ms; /* @kind other */
+  --dur-fast:    140ms; /* @kind other */
+  --dur-base:    220ms; /* @kind other */
+  --dur-slow:    360ms; /* @kind other */
+  --dur-slower:  600ms; /* @kind other */
+
+  /* Easing */
+  --ease-out:     cubic-bezier(0.22, 1, 0.36, 1);   /* @kind other */
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);   /* @kind other */
+  --ease-emphas:  cubic-bezier(0.16, 1, 0.3, 1);    /* @kind other */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);    /* @kind other */
+
+  /* Common transitions */
+  --t-color:    color var(--dur-fast) var(--ease-standard),
+                background-color var(--dur-fast) var(--ease-standard),
+                border-color var(--dur-fast) var(--ease-standard); /* @kind other */
+  --t-transform: transform var(--dur-base) var(--ease-out); /* @kind other */
+  --t-control:  background-color var(--dur-fast) var(--ease-standard),
+                box-shadow var(--dur-fast) var(--ease-standard),
+                transform var(--dur-fast) var(--ease-out); /* @kind other */
+}

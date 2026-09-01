@@ -1,0 +1,111 @@
+/* ============================================================
+   Handhold — Color tokens
+   Base scales + semantic aliases.
+   Direction: warm-neutral "paper" surfaces, near-black ink for
+   confident primary UI, and an iridescent "orb" gradient as the
+   signature brand moment (the AI agent).
+   NOTE: exact brand hexes could not be extracted from the live
+   site — these are a faithful interpretation. Swap when confirmed.
+   ============================================================ */
+:root {
+  /* --- Warm neutrals (the "paper & ink" foundation) --- */
+  --paper:        #FBFAF8; /* page background, warm off-white   */
+  --paper-sunk:   #F4F2ED; /* recessed wells, subtle fills      */
+  --surface:      #FFFFFF; /* cards, sheets                     */
+  --surface-2:    #F7F5F1; /* secondary surface / hover wells   */
+
+  --ink-900:      #15171C; /* primary text, ink buttons         */
+  --ink-800:      #23262E;
+  --ink-700:      #383C46; /* strong secondary text             */
+  --ink-600:      #565B66;
+  --ink-500:      #6C717D; /* muted text, captions              */
+  --ink-400:      #969BA6;
+  --ink-300:      #BCBFC7; /* disabled text, faint icons        */
+  --ink-200:      #DEDDD8; /* hairlines on paper                */
+  --ink-100:      #ECEAE4; /* lightest fills                    */
+
+  --line:         #E7E4DD; /* default warm border               */
+  --line-strong:  #D6D2C9; /* emphasized border                 */
+  --line-ondark:  rgba(255,255,255,0.12);
+
+  /* --- Violet accent (drawn from the orb's core) --- */
+  --violet-50:    #F1EEFE;
+  --violet-100:   #E3DDFD;
+  --violet-200:   #C7BCFB;
+  --violet-300:   #A493F4;
+  --violet-400:   #876FEC;
+  --violet-500:   #6A52E3; /* accent base: links, focus, active */
+  --violet-600:   #5A42CF;
+  --violet-700:   #4A35AC;
+
+  /* --- Coral / ember (warm half of the orb, energy + CTAs) --- */
+  --coral-50:     #FFF0EC;
+  --coral-100:    #FFDDD3;
+  --coral-200:    #FFBBA8;
+  --coral-300:    #FF937B;
+  --coral-400:    #FB6F53;
+  --coral-500:    #F0573B; /* warm accent                       */
+  --coral-600:    #D6452C;
+
+  /* --- Peach / periwinkle (orb endpoints, soft tints) --- */
+  --peach-200:    #FFD7BF;
+  --peach-300:    #FFC09E;
+  --peri-200:     #C8DBFF;
+  --peri-300:     #9FBFFF;
+  --peri-400:     #6F9BFB;
+
+  /* --- Semantic status (warm-tuned) --- */
+  --success-50:   #E9F6EE;
+  --success-500:  #1F9D55;
+  --success-600:  #15813F;
+  --warning-50:   #FCF1DE;
+  --warning-500:  #D9921A;
+  --warning-600:  #B5760C;
+  --danger-50:    #FCEDEA;
+  --danger-500:   #DC4634;
+  --danger-600:   #BC3424;
+  --info-50:      #E9F1FD;
+  --info-500:     #2F73D8;
+
+  /* --- Signature gradients (the "Orb") --- */
+  --grad-orb: radial-gradient(100% 100% at 34% 30%,
+              #FFE3C6 0%, #FFA079 17%, #F26A45 33%,
+              #C75BBE 53%, #7E6BF0 72%, #6FA0FB 93%); /* @kind color */
+  --grad-orb-soft: linear-gradient(135deg,
+              #FFC4A0 0%, #FF8060 28%, #C75BCB 56%, #7E6BF0 78%, #7CA6FF 100%); /* @kind color */
+  --grad-hero: linear-gradient(180deg,
+              rgba(255,196,160,0.16) 0%, rgba(142,111,240,0.10) 55%,
+              rgba(124,166,255,0.06) 100%); /* @kind color */
+  --grad-ink:  linear-gradient(180deg, #23262E 0%, #15171C 100%); /* @kind color */
+  --grad-sheen: linear-gradient(180deg,
+              rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 60%); /* @kind color */
+
+  /* --- Semantic aliases (use these in components) --- */
+  --bg-page:        var(--paper);
+  --bg-sunk:        var(--paper-sunk);
+  --surface-card:   var(--surface);
+  --surface-raised: var(--surface);
+  --surface-hover:  var(--surface-2);
+
+  --text-strong:    var(--ink-900);
+  --text-body:      var(--ink-700);
+  --text-muted:     var(--ink-500);
+  --text-faint:     var(--ink-400);
+  --text-onaccent:  #FFFFFF;
+  --text-oninvert:  #F4F2ED;
+  --text-link:      var(--violet-600);
+
+  --border-subtle:  var(--line);
+  --border-strong:  var(--line-strong);
+
+  --accent:         var(--violet-500);
+  --accent-hover:   var(--violet-600);
+  --accent-soft:    var(--violet-50);
+  --accent-warm:    var(--coral-500);
+
+  --focus-ring:     var(--violet-400);
+
+  --primary-bg:        var(--ink-900); /* ink buttons */
+  --primary-bg-hover:  #000000;
+  --primary-fg:        #FFFFFF;
+}

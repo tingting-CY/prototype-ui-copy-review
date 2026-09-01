@@ -1,0 +1,11 @@
+/* ============================================================
+   Handhold — Font faces
+   The live site's exact webfonts could not be extracted, so these
+   are close Google Fonts substitutions. FLAGGED for confirmation:
+     • Display  → Schibsted Grotesk  (confident, geometric grotesk)
+     • Body/UI  → Hanken Grotesk     (humanist, warm, highly legible)
+     • Mono     → JetBrains Mono
+   Replace these @import targets with self-hosted brand fonts when
+   the real files are available.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Hanken+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');

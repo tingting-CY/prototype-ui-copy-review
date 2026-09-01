@@ -63,6 +63,7 @@
 │   └── VERSION_HISTORY.md           # Skill 功能迭代记录
 ├── scripts/
 │   └── validate_skill_consistency.py# 本地一致性校验
+├── prototype/                       # 可点击 Web 原型（示例数据，不参与审查）
 ├── CONTRIBUTING.md                  # 贡献规则与提交流程
 └── .gitignore
 ```
