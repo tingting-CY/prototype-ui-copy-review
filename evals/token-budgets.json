@@ -1,0 +1,66 @@
+{
+  "tokenizer": "o200k_base",
+  "tiktoken_version": "0.14.0",
+  "budgets": [
+    {
+      "name": "frontmatter_description",
+      "kind": "description",
+      "max_tokens": 180
+    },
+    {
+      "name": "skill_body",
+      "files": ["SKILL.md"],
+      "max_tokens": 1600
+    },
+    {
+      "name": "single_punctuation",
+      "files": ["SKILL.md", "references/hf-core.md", "references/hf-punctuation.md"],
+      "max_tokens": 3500
+    },
+    {
+      "name": "single_feedback_general",
+      "files": ["SKILL.md", "references/hf-core.md", "references/hf-state-feedback.md"],
+      "max_tokens": 3500
+    },
+    {
+      "name": "single_terminology_component",
+      "files": ["SKILL.md", "references/hf-core.md", "references/hf-terminology-components.md"],
+      "max_tokens": 3500
+    },
+    {
+      "name": "standard_page_with_change_list",
+      "files": ["SKILL.md", "references/hf-core.md", "references/hf-punctuation.md", "references/hf-state-feedback.md", "references/hf-terminology-components.md", "references/change-list-schema.md"],
+      "max_tokens": 6500
+    },
+    {
+      "name": "explicit_spt_review",
+      "files": ["SKILL.md", "references/hf-core.md", "references/hf-state-feedback.md", "references/system-prompt-patterns.md"],
+      "max_tokens": 5500
+    },
+    {
+      "name": "paletx_component_review",
+      "files": ["SKILL.md", "references/hf-core.md", "references/hf-terminology-components.md", "references/paletx-design-system-copy-spec.md"],
+      "max_tokens": 6500
+    },
+    {
+      "name": "governance_with_coverage_gap",
+      "files": ["SKILL.md", "references/hf-core.md", "references/hf-state-feedback.md", "references/coverage-gap-schema.md"],
+      "max_tokens": 4500
+    },
+    {
+      "name": "custom_assistant_setup",
+      "files": ["SKILL.md", "references/prompt-templates.md"],
+      "max_tokens": 3000
+    },
+    {
+      "name": "source_registry_maintenance",
+      "files": ["SKILL.md", "references/source-register.md", "references/paletx-design-system-copy-spec.md", "references/system-prompt-patterns.md"],
+      "max_tokens": 7500
+    },
+    {
+      "name": "all_hf_runtime_shards",
+      "files": ["SKILL.md", "references/hf-core.md", "references/hf-punctuation.md", "references/hf-format.md", "references/hf-state-feedback.md", "references/hf-terminology-components.md", "references/hf-language.md"],
+      "max_tokens": 8000
+    }
+  ]
+}

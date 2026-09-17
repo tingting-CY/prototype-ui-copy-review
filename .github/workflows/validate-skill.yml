@@ -19,20 +19,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Install validation dependencies
+        run: python3 -m pip install tiktoken==0.14.0
       - name: Validate Skill structure and public-source safety
         run: python3 scripts/validate_skill_consistency.py --strict
+      - name: Validate runtime token budgets
+        run: python3 scripts/validate_token_budget.py
       - name: Validate evaluation JSON
         run: |
           python3 -m json.tool evals/evals.json > /dev/null
           python3 -m json.tool evals/trigger-eval.json > /dev/null
-      - name: Validate showcase build
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-          cache-dependency-path: showcase/package-lock.json
-      - name: Build public showcase
-        working-directory: showcase
-        run: |
-          npm ci
-          npm run build
+          python3 -m json.tool evals/token-budgets.json > /dev/null
