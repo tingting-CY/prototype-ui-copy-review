@@ -1,105 +1,70 @@
 # 贡献指南
 
-感谢你为 `prototype-ui-copy-review` 提交改进。本仓库包含可复用的 UI 文案审查 Skill、规则库、来源登记、模板和校验脚本。贡献应以**可验证、可追溯、不过度推断**为原则，并保持 Skill 的渐进式加载结构。
+本仓库维护一个可验证、可追溯且按需加载的 UI 文案审查 Skill。改动应保持规则判断安全，同时避免扩大普通任务的上下文成本。
 
-## 可以贡献的内容
-
-欢迎提交以下类型的改进：
+## 贡献类型
 
 | 类型 | 示例 |
 |---|---|
-| 规则完善 | 增加有明确触发条件、例外、适用边界和改写示例的 `HF-`、`PX-` 或 `SPT-` 规则。 |
-| 审查流程优化 | 改进范围确认、分级、跨页面核对、修改清单或规范缺口治理流程。 |
-| 模板与脚本改进 | 提升提示词模板、Markdown 清单模板或一致性校验脚本的可用性。 |
-| 文档修订 | 修正使用说明、维护规则、资源索引、链接或版本记录。 |
-| 已验证的来源更新 | 在确认公开授权与适用边界后，补充或更新来源登记及其结构化规则。 |
+| 规则完善 | 增加有触发条件、例外和示例的 `HF-`、`PX-` 或 `SPT-` 规则。 |
+| 流程优化 | 改进加载路由、分级、跨页核对、清单或治理流程。 |
+| 模板与脚本 | 改进 Prompt、输出 schema、校验或 token 预算。 |
+| 来源更新 | 在确认授权和适用边界后更新结构化来源规则。 |
 
-请不要提交没有可验证依据的业务定义、法务结论、安全口径、品牌术语、英文译文或设计规范；这些内容应由相应责任方确认后再纳入。
+不要提交未经确认的业务定义、法律结论、安全口径、品牌术语或英文译文。
 
-## 开始前
+## 文件职责
 
-1. 先阅读 [README.md](README.md) 了解仓库入口，再阅读 [SKILL.md](SKILL.md) 了解主流程和资源路由。
-2. 仅加载与本次修改直接相关的 `references/` 文件，避免在 `SKILL.md` 与规则文件之间复制同一规则。
-3. 修改前检查 [docs/VERSION_HISTORY.md](docs/VERSION_HISTORY.md)，确认当前版本、已有规则编号和维护要求。
-4. 提交前确认不包含凭据、个人数据、内部系统链接、未获授权的截图、内部文档正文或其他敏感信息。
+- `SKILL.md`：只保留运行边界、默认值、一级路由和最小输出契约。
+- `references/hf-core.md`：所有审查共用的证据与语义边界。
+- `references/hf-punctuation.md`：`HF-PUN-*`、`HF-SPC-*`。
+- `references/hf-format.md`：`HF-MIX-*`、`HF-NUM-*`。
+- `references/hf-state-feedback.md`：`HF-STA-*`、`HF-FBK-*`。
+- `references/hf-terminology-components.md`：`HF-TERM-*`、`HF-CMP-*`。
+- `references/hf-language.md`：`HF-LNG-*`。
+- `references/paletx-design-system-copy-spec.md`、`system-prompt-patterns.md`：显式启用的来源规则。
+- `references/change-list-schema.md`、`coverage-gap-schema.md`：按需交付 schema。
+- `references/source-register.md`：来源和维护状态，不承载运行规则。
 
-## 规则与来源要求
+规则只维护在一个位置。不要在 `SKILL.md`、Prompt、README 和 schema 中复制规则正文。
 
-### 规则编号
+## 规则要求
 
-新增规则必须使用唯一且稳定的编号，并遵循现有前缀体系：
+新增规则使用唯一稳定编号。每条规则至少说明适用条件、判断标准、必要例外，并在可安全确定时提供示例。无法验证的偏好不能成为强制规则。
 
 | 前缀 | 适用内容 |
 |---|---|
-| `HF-` | 高频 UI 文案规则。 |
-| `PX-` | 已确认可适用的设计系统规则。 |
-| `SPT-` | 系统提示信息句型与结构规则。 |
-| `COPY-` | Markdown 修改清单条目。 |
-| `UC-` | 未覆盖规范场景。 |
+| `HF-` | 通用高频规则。 |
+| `PX-` | PaletX/ZTE 来源规则。 |
+| `SPT-` | 系统提示信息来源规则。 |
+| `COPY-` | 可执行修改条目。 |
+| `UC-` | 规范治理条目。 |
 
-每条规则至少应说明适用条件、判断标准、例外或不适用边界，以及在可安全确定时的改写示例。不得把个人偏好写成强制规则，也不得把无法验证的来源内容补写为确定结论。
+新 HF 规则必须放入最窄的现有分片；只有确实无法归类时才新增分片，并同步 `SKILL.md` 路由与 token 预算。
 
-### 来源登记与公开性
+## 来源与公开性
 
-引用外部来源时，请同步更新 [references/source-register.md](references/source-register.md)，并记录来源 ID、名称、公开可访问地址、提取日期、覆盖范围、提炼状态和维护规则。只有确认可公开引用的地址才可写入该文件。
+外部来源同步登记来源 ID、名称、公开地址、提取日期、版本、覆盖范围、状态和维护规则。内部或受限来源不得公开 URL、正文、截图、账号或访问路径，只保留脱敏元数据。发现安全问题时不要通过公开 Issue 或 PR 暴露细节。
 
-内部来源、受限页面或未获授权的材料不得公开 URL、正文、截图、账号信息或访问路径。此类信息只能以来源编号、概括性名称、提取日期、覆盖范围和“链接不公开”的脱敏描述登记；在公开仓库中不得通过提交记录、Issue、PR 描述或附件重新暴露。`scripts/validate_skill_consistency.py` 会把内部主机、内网路径、私有网段 IP 与机器专属 home 目录判为错误。
+## 版本
 
-## 文档与版本同步
+修改 `SKILL.md`、规则、Prompt、输出、脚本或默认行为时更新 `docs/VERSION_HISTORY.md`；影响使用方式时同步根目录和 `docs/README.md`。
 
-以下变化必须同步更新 [docs/VERSION_HISTORY.md](docs/VERSION_HISTORY.md)：
+- 不兼容的默认行为或输出变化：主版本。
+- 新增兼容能力或规则集：次版本。
+- 文案、链接、元数据或兼容修正：修订版本。
 
-- `SKILL.md`、`references/`、来源登记、提示词、输出行为或 `scripts/` 的修改；
-- 用户可见能力、规则范围、使用方式或已知限制的变化；
-- 影响兼容性、来源边界或维护流程的变更。
-
-如果变更影响用户如何使用 Skill，还应同步更新 [docs/README.md](docs/README.md)。请按语义化版本策略判断版本号：不兼容改动升级主版本，新增能力升级次版本，文案、链接、规则编号、脱敏或维护元数据等兼容性修订升级修订版本。
-
-仓库根目录 `README.md` 用于公开入口；`docs/README.md` 是完整使用手册。更新时请避免重复维护同一段详细规则，并保持两者的链接与版本信息一致。
-
-## 本地校验
-
-请在提交前于仓库根目录运行：
+## 校验
 
 ```bash
 python3 scripts/validate_skill_consistency.py --strict
-# SKILL_CREATOR 指向本机 anthropics/skills 仓库中的 skills/skill-creator 目录
-python3 "$SKILL_CREATOR/scripts/quick_validate.py" .
-```
-
-请同时检查以下内容：
-
-```bash
+python3 scripts/validate_token_budget.py
+python3 "$SKILL_CREATOR/scripts/quick_validate.py" /absolute/path/to/prototype-ui-copy-review
+python3 -m json.tool evals/evals.json > /dev/null
+python3 -m json.tool evals/trigger-eval.json > /dev/null
 git diff --check
-git status --short
 ```
 
-若新增或修改 Python 逻辑，请至少运行与变更直接相关的代表性用例；如果校验脚本本身的检查范围变化，请在 PR 中说明新增或移除的检查项。
+`validate_token_budget.py` 使用 `tiktoken==0.14.0` 与 `o200k_base`。不要仅提高预算来让 CI 通过；先说明增加成本的必要性，并优先拆分或按需加载。
 
-若修改了 `SKILL.md`、审查流程或 description，请用 [skill-creator](https://github.com/anthropics/skills/tree/main/skills/skill-creator) 按 `evals/evals.json` 对比新旧版本的输出，并用 `evals/trigger-eval.json` 复核触发准确率；新增审查能力时同步补充用例与断言。
-
-## 提交与 Pull Request
-
-请将一次提交聚焦于一个可审查的目的，并使用清晰的提交信息，例如：
-
-```text
-fix: correct HF punctuation exception
-feat: add SPT retry guidance
-chore: redact internal source reference
-docs: clarify review scope configuration
-```
-
-Pull Request 描述应说明：
-
-1. **问题与动机**：为什么需要此项修改。
-2. **改动范围**：修改了哪些规则、模板、脚本或文档。
-3. **规则与来源依据**：涉及规则时，列出编号与可公开验证的来源状态。
-4. **兼容性影响**：说明是否改变既有调用、输出格式或默认审查行为。
-5. **校验结果**：粘贴两项标准校验的结果摘要。
-6. **敏感信息复核**：确认未包含内部链接、凭据、个人数据、受限材料或未获授权内容。
-
-维护者可能要求拆分混合改动、补充来源边界、调整规则编号或将业务口径改为“待确认”。这不是否定建议，而是为了确保 Skill 的结论可追溯、可复用且适合公开协作。
-
-## 安全与敏感信息
-
-请勿通过公开 Issue、Pull Request 或提交记录报告凭据泄露、内部链接、个人信息或其他敏感内容。请先最小化公开描述并联系仓库维护者，等待其提供合适的私下沟通方式后再补充必要信息。
+修改 `SKILL.md`、description 或路由时，对比 `evals/evals.json` 与 `evals/trigger-eval.json`。PR 应说明：问题与动机、改动范围、兼容性、规则/来源依据、校验结果、token 变化和敏感信息复核。
