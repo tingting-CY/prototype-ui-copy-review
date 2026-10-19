@@ -64,7 +64,7 @@
     },
     {
       "name": "en_us_localization_review",
-      "files": ["SKILL.md", "references/hf-core.md", "references/hf-language.md", "references/en-us-localization-rules.md"],
+      "files": ["SKILL.md", "references/hf-core.md", "references/en-us-localization-rules.md"],
       "max_tokens": 7500
     },
     {
@@ -76,6 +76,7 @@
       "name": "custom_en_us_assistant_setup",
       "files": ["SKILL.md", "references/prompt-templates.md", "references/en-us-prompt-template.md", "references/en-us-localization-rules.md"],
       "max_tokens": 9500
-    }
+    },
+    {"name": "en_us_page_with_change_list", "files": ["SKILL.md", "references/hf-core.md", "references/en-us-localization-rules.md", "references/change-list-schema.md"], "max_tokens": 8000}
   ]
 }

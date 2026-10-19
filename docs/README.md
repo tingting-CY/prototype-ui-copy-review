@@ -1,6 +1,6 @@
 # 原型界面文案审查 Skill
 
-> **版本：v2.1.0**
+> **版本：v2.1.1**
 > **用途：** 审查简体中文及目标 locale 明确为 en-US 的 UI 文案，并以尽量小的规则上下文输出可验证、可执行的修改建议。
 
 ## 适用范围
@@ -152,3 +152,15 @@ git diff --check
 ```
 
 修改规则或默认行为后，同步更新版本记录、回归用例和 token 预算。不要为了压缩 token 删除会影响判定安全性的适用边界或例外；优先通过分片和按需加载控制成本。
+
+英文审查仅加载共用基线和英文规则包；不重复加载中文 HF 语言分片。未指定审查维度时直接使用默认范围。
+
+## 行为评测
+
+将模型响应保存为 JSON：`model`、`revision`、`outputs`（每项含 `name` 和原始 `output`）。不将 expected_output 或 assertions 传给模型。执行：
+
+```bash
+python3 scripts/evaluate_outputs.py --responses /path/to/responses.json --report /path/to/report.json
+```
+
+缺失输出或断言失败返回非零。记录模型版本与被测提交；正则断言仅验证部分输出契约，语义准确性仍需检查原始输出。结构 CI 不调用付费模型，不代表行为评测通过。

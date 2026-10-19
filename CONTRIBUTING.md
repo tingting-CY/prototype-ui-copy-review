@@ -72,3 +72,13 @@ git diff --check
 修改 `SKILL.md`、description 或路由时，对比 `evals/evals.json` 与 `evals/trigger-eval.json`。PR 应说明：问题与动机、改动范围、兼容性、规则/来源依据、校验结果、token 变化和敏感信息复核。
 
 en-US 规则修改还应更新 `evals/en-us-localization-tests.md`；PX 英文专题须注明来源是否已在线核验，并确保通用 en-US 建议不会覆盖已确认且适用的 PX 规则。不得将用户截图或未经授权的项目文案提交到公开仓库。
+
+## 行为评测
+
+将模型响应保存为 JSON：`model`、`revision`、`outputs`（每项含 `name` 和原始 `output`）。不将 expected_output 或 assertions 传给模型。执行：
+
+```bash
+python3 scripts/evaluate_outputs.py --responses /path/to/responses.json --report /path/to/report.json
+```
+
+缺失输出或断言失败返回非零。记录模型版本与被测提交；正则断言仅验证部分输出契约，语义准确性仍需检查原始输出。结构 CI 不调用付费模型，不代表行为评测通过。

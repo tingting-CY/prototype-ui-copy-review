@@ -85,8 +85,8 @@
     {
       "id": 6,
       "name": "en-us-localization-with-paletx",
-      "prompt": "目标 locale 明确为 en-US，项目采用 PaletX。请审查下列界面文案的大小写和组件标点，并给规则编号。页面/窗口标题：Account settings；按钮：Add To Favorite；单选项：Phase Update；占位符：Enter a name。",
-      "expected_output": "直接按页面审查模式给出简体中文结论。加载 en-US 规则及 PaletX；PX 对组件大小写的规定优先于通用 sentence case 建议。标题改为 Account Settings；按钮改为 Add to Favorites（to 小写、复数）；单选项使用句子大小写 Phase update；占位符改为 Enter a name（去掉句号）。应引用 PX-ENG-02、PX-ENG-03、PX-ENG-05、PX-CMP-09，并避免把所有组件套用同一大小写规则。",
+      "prompt": "目标 locale 明确为 en-US，项目采用 PaletX。请审查下列界面文案的大小写和组件标点，并给规则编号。页面/窗口标题：Account settings；按钮：Add To Favorite；单选项：Phase Update；占位符：Enter a name。 项目批准的收藏功能名称为 Favorites。",
+      "expected_output": "直接按页面审查模式给出简体中文结论。加载 en-US 规则及 PaletX；PX 对组件大小写的规定优先于通用 sentence case 建议。标题改为 Account Settings；按钮改为 Add to Favorites（to 小写、复数）；单选项使用句子大小写 Phase update；占位符改为 Enter a name（去掉句号）。应引用 PX-ENG-02、PX-ENG-03、PX-ENG-05、PX-CMP-09，并避免把所有组件套用同一大小写规则。 Favorites 复数依据已批准术语，不从按钮原文猜测数量。",
       "files": [
         "references/en-us-localization-rules.md",
         "references/paletx-design-system-copy-spec.md",
@@ -131,6 +131,10 @@
           ]
         }
       ]
-    }
+    },
+    {"id": 7, "name": "en-us-default-audit", "prompt": "目标 en-US，检查设置页文案：按钮 Save changes.；成功提示 Your changes was saved.。输出简体中文。", "expected_output": "按默认审查流程与适用语言规则执行；不推断未提供的业务事实。", "files": [], "assertions": [{"id": "behavior_0", "text": "验证输出行为", "check": "regex_all", "patterns": ["EN-US-GRAM", "were saved|Changes saved|Saved"]}, {"id": "behavior_1", "text": "验证输出行为", "check": "regex_none_all", "patterns": ["请确认审查维度", "请选择维度", "PX-[A-Z]+-"]}]},
+    {"id": 8, "name": "english-locale-unknown", "prompt": "检查这些英文 UI 文案：日期 10/11/2026，标签 Favourite colour。没有其他项目信息。", "expected_output": "按默认审查流程与适用语言规则执行；不推断未提供的业务事实。", "files": [], "assertions": [{"id": "behavior_0", "text": "验证输出行为", "check": "regex_any", "patterns": ["地区|locale|美式|英式"]}, {"id": "behavior_1", "text": "验证输出行为", "check": "regex_none", "pattern": "改为.*Favorite color"}]},
+    {"id": 9, "name": "en-us-uncertain-payment", "prompt": "目标 en-US。付款按钮 Submit，未提供点击后是否扣款。检查文案并生成修改清单。", "expected_output": "按默认审查流程与适用语言规则执行；不推断未提供的业务事实。", "files": [], "assertions": [{"id": "behavior_0", "text": "验证输出行为", "check": "regex_any", "patterns": ["待确认"]}, {"id": "behavior_1", "text": "验证输出行为", "check": "regex_none", "pattern": "\\|\\s*Pay now\\s*\\|"}]},
+    {"id": 10, "name": "en-us-bilingual-copy", "prompt": "目标 en-US，请生成开发替换清单。上传提示，中文源文：最多上传10个文件；当前英文：Upload 10 files.。上限已确认为10。", "expected_output": "按默认审查流程与适用语言规则执行；不推断未提供的业务事实。", "files": [], "assertions": [{"id": "behavior_0", "text": "验证输出行为", "check": "regex_all", "patterns": ["COPY-001", "中文源文", "Upload up to 10 files", "EN-US-BI"]}]}
   ]
 }

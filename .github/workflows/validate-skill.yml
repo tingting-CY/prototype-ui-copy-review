@@ -30,3 +30,6 @@ jobs:
           python3 -m json.tool evals/evals.json > /dev/null
           python3 -m json.tool evals/trigger-eval.json > /dev/null
           python3 -m json.tool evals/token-budgets.json > /dev/null
+
+      - name: Test behavior evaluation checker (no model invocation)
+        run: python3 -m unittest discover -s scripts -p "test_*.py"

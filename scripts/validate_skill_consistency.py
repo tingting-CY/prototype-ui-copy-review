@@ -225,7 +225,7 @@ REQUIRED_TOKEN_BUDGETS = {
     },
     "en_us_localization_review": {
         "kind": None,
-        "files": {"SKILL.md", "references/hf-core.md", "references/hf-language.md", "references/en-us-localization-rules.md"},
+        "files": {"SKILL.md", "references/hf-core.md", "references/en-us-localization-rules.md"},
     },
     "paletx_english_review": {
         "kind": None,

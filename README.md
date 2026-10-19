@@ -104,3 +104,5 @@ python3 /path/to/skill-creator/scripts/quick_validate.py /absolute/path/to/proto
 | [Token 预算](evals/token-budgets.json) | 主文件与典型运行路径的预算上限。 |
 
 请勿提交凭据、内部系统地址、未授权截图、内部文档正文或未经确认的业务、法务与安全口径。
+
+英文审查仅加载共用基线和英文规则包；不重复加载中文 HF 语言分片。未指定审查维度时直接使用默认范围。
