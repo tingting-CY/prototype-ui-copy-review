@@ -81,6 +81,56 @@
         {"id": "governance_fields", "text": "包含治理字段", "check": "regex_all", "patterns": ["未覆盖原因", "需要评估", "推荐规范动作"]},
         {"id": "no_copy", "text": "未要求修改清单", "check": "regex_none", "pattern": "COPY-\\d{3}"}
       ]
+    },
+    {
+      "id": 6,
+      "name": "en-us-localization-with-paletx",
+      "prompt": "目标 locale 明确为 en-US，项目采用 PaletX。请审查下列界面文案的大小写和组件标点，并给规则编号。页面/窗口标题：Account settings；按钮：Add To Favorite；单选项：Phase Update；占位符：Enter a name。",
+      "expected_output": "直接按页面审查模式给出简体中文结论。加载 en-US 规则及 PaletX；PX 对组件大小写的规定优先于通用 sentence case 建议。标题改为 Account Settings；按钮改为 Add to Favorites（to 小写、复数）；单选项使用句子大小写 Phase update；占位符改为 Enter a name（去掉句号）。应引用 PX-ENG-02、PX-ENG-03、PX-ENG-05、PX-CMP-09，并避免把所有组件套用同一大小写规则。",
+      "files": [
+        "references/en-us-localization-rules.md",
+        "references/paletx-design-system-copy-spec.md",
+        "references/paletx-english-appendix.md"
+      ],
+      "assertions": [
+        {
+          "id": "uses_px_title_case",
+          "text": "标题应用 PX Title Case",
+          "check": "regex_all",
+          "patterns": [
+            "PX-ENG-02",
+            "Account Settings"
+          ]
+        },
+        {
+          "id": "uses_sentence_case_for_option",
+          "text": "选项使用 PX sentence case",
+          "check": "regex_all",
+          "patterns": [
+            "PX-ENG-03",
+            "Phase update"
+          ]
+        },
+        {
+          "id": "button_and_placeholder",
+          "text": "修正按钮大小写和占位符句点",
+          "check": "regex_all",
+          "patterns": [
+            "Add to Favorites",
+            "Enter a name"
+          ]
+        },
+        {
+          "id": "px_priority",
+          "text": "明确 PX 优先级",
+          "check": "regex_any",
+          "patterns": [
+            "PX 优先",
+            "优先于通用",
+            "覆盖通用"
+          ]
+        }
+      ]
     }
   ]
 }

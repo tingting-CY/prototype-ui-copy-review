@@ -1,8 +1,8 @@
 # 原型界面文案审查 Skill：版本更新记录
 
 > 文档状态：当前生效  
-> 当前版本：**v2.0.0**
-> 更新日期：2026-09-17（GMT+8）
+> 当前版本：**v2.1.0**
+> 更新日期：2026-10-19（GMT+8）
 > 适用对象：`prototype-ui-copy-review` Skill 及其参考规则、模板和来源登记。
 
 ## 版本策略
@@ -15,6 +15,7 @@
 
 | 版本 | 日期 | 类型 | 核心变化 | 兼容性 |
 |---|---|---|---|---|
+| v2.1.0 | 2026-10-19 | 次版本 | 新增目标 locale 明确为 en-US 的 UI 本地化审查、独立英语规则与提示词、PX 英文专题附录及回归用例。 | 向后兼容；原有简体中文审查路径与默认行为不变。 |
 | v2.0.0 | 2026-09-17 | 主版本 | 默认直接审查；HF 规则按类型分片；PX/SPT、COPY 与 UC 改为显式加载；新增 token 预算 CI。 | 不兼容；依赖旧自动确认、自动 SPT、自动清单或自动 UC 的调用方需显式声明。 |
 | v1.11.0 | 2026-08-20 | 次版本 | 新增一至五条 UI 文案的直接问答校验模式，直接给出合规结论、依据和最小建议。 | 向后兼容；完整审查、维度确认与修改清单流程不变。 |
 | v1.10.0 | 2026-08-20 | 次版本 | 按 skill-creator 方法优化触发描述与主文件结构，补齐 SPT 来源脱敏，新增回归用例、触发测试集与敏感信息校验。 | 向后兼容；审查规则、分级与输出格式不变。 |
@@ -35,6 +36,24 @@
 ---
 
 ## 详细更新记录
+
+### v2.1.0 · en-US UI 本地化审查
+
+**变更类型。** 次版本，向后兼容。
+
+**变更原因。** 用户需要在既有共用审查框架上增加美国英语（`en-US`）用户可见 UI 文案审查，并区分通用英语规则与 PaletX/ZTE 组件规则；此前公开仓库明确排除本地化审查。
+
+**新增或修改内容。** 新增 `references/en-us-localization-rules.md`，覆盖 locale 边界、拼写、语法、组件语境、状态反馈、标点、美国格式、可访问表达、语气及中英双语语义对照；新增 `references/en-us-prompt-template.md`、`evals/en-us-localization-tests.md` 和结构化 PX/en-US 回归项。将 PaletX 英文专题拆入 `references/paletx-english-appendix.md` 按需加载，涵盖向导、告警/通知、计数器、术语、提示句型和界面压缩；适用 PX 规则优先于通用 en-US 建议。更新 Skill 路由、README、来源登记、贡献指南、token 预算及校验器。
+
+**行为变化。** 仅用户或项目明确指定目标 locale 为 `en-US` 时，加载英语规则；只说“英语”且地区会改变判断时先确认。此能力审查已经提供的 UI 文案，不执行中译英翻译，不默认覆盖其他英语 locale。既有简体中文默认路径、单条问答、COPY/UC 触发、优先级及报告契约不变。
+
+**受影响文件。** `SKILL.md`、根目录与 `docs/README.md`、`CONTRIBUTING.md`、`docs/VERSION_HISTORY.md`；新增 `references/en-us-localization-rules.md`、`references/en-us-prompt-template.md`、`references/paletx-english-appendix.md`、`evals/en-us-localization-tests.md`；修改 `references/paletx-design-system-copy-spec.md`、`references/prompt-templates.md`、`references/source-register.md`、`evals/evals.json`、`evals/trigger-eval.json`、`evals/token-budgets.json` 和 `scripts/validate_skill_consistency.py`。
+
+**兼容性与迁移。** 向后兼容。既有简体中文调用不会加载 en-US 规则，也不改变已发布的 `HF-`、`PX-`、`SPT-` 编号或默认交付行为。英语本地化调用需明确传入 `en-US`；采用 PaletX 时，额外加载英语附录。
+
+**来源与边界。** en-US 通用规则为可审查语言规则，不将偏好误报为硬规范。PX 英语专题基于用户提供的 PaletX 页面内容摘录整理；该网页本次未能在线复核，来源登记明确标注补充摘录的核验状态，不声称已验证为最新版本。公开仓库不包含用户截图或项目业务文案。
+
+**校验状态。** 已通过 `python3 scripts/validate_skill_consistency.py --strict`（11 项通过、0 警告、0 错误）、15 条 token 预算、三份 JSON 解析、`quick_validate.py` 与 `git diff --check`。回归资产包含 7 条结构化 eval 和 42 条 en-US/PX 手工用例；本次执行了结构校验，未运行模型输出级自动评测。
 
 ### v2.0.0 · 按需加载与 token 预算
 

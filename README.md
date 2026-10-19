@@ -1,8 +1,8 @@
 # prototype-ui-copy-review
 
-> 面向原型、界面截图、页面流程、录屏、文案清单与 PRD 的**简体中文 UI 文案规范性与一致性审查 Skill**。
+> 面向原型、界面截图、页面流程、录屏、文案清单与 PRD 的**简体中文及明确限定 en-US 的 UI 文案规范性与一致性审查 Skill**。
 
-当前源码版本为 **v2.0.0**。本版本重构了运行时加载路径：普通请求直接审查，只读取材料命中的规则分片；PaletX、SPT、Markdown 修改清单和规范缺口治理均按明确需求加载。
+当前源码版本为 **v2.1.0**。本版本在保留 v2 按需加载架构的基础上，新增 en-US 用户可见 UI 本地化审查、独立语言规则包及 PaletX 英文专题附录；普通请求仍只读取材料命中的规则分片。
 
 ## 能力
 
@@ -10,6 +10,7 @@
 |---|---|
 | 少量文案问答 | 对 1–5 条明确 UI 文案直接返回“结论、依据、建议”。 |
 | 页面与流程审查 | 检查标题、字段、按钮、弹窗、术语、标点、格式、状态反馈、风险和跨页一致性。 |
+| en-US 本地化审查 | 用户/项目明确指定 `en-US` 时加载美式英语语言规则；不默认覆盖其他英语 locale，也不代替翻译服务。 |
 | 分层规则 | 支持项目规则、PaletX/ZTE（`PX-`）、系统提示信息来源规范（`SPT-`）与通用高频规则（`HF-`）。 |
 | 可执行清单 | 用户要求时生成带 `COPY-` 编号的 Markdown 替换清单。 |
 | 规范治理 | 用户要求补规范时，以 `UC-` 记录现有规则无法唯一判定的真实场景。 |
@@ -20,8 +21,9 @@
 | 模块 | 默认值 |
 |---|---|
 | HF 通用规则 | 启用；按标点、格式、状态反馈、术语组件、语言分片加载。 |
+| en-US 规则 | 仅在目标 locale 明确为 `en-US` 时启用。 |
 | 跨页面一致性 | 两个及以上相关页面或状态时启用。 |
-| PaletX/ZTE | 用户或项目明确指定时启用。 |
+| PaletX/ZTE | 用户或项目明确指定时启用；en-US 界面另按需加载 PaletX 英文专题附录。 |
 | SPT 来源规则 | 用户或项目明确指定“系统产品提示信息规范”“常用句型”或 `SPT-` 时启用。 |
 | `COPY-` 清单 | 用户要求清单、导出或“给开发直接替换”时启用。 |
 | `UC-` 规范缺口 | 用户要求规范治理、补规则或识别缺口时启用。 |
@@ -35,6 +37,8 @@
 删除确认弹窗按钮写“确定”合规吗？
 
 检查这张设置页截图里的中文文案。
+
+按 en-US 规则审查这张设置页截图里的英文按钮和字段。
 
 按 PaletX 设计系统审查成员邀请流程，重点检查术语和按钮。
 
@@ -65,7 +69,10 @@ references/
 ├── hf-state-feedback.md
 ├── hf-terminology-components.md
 ├── hf-language.md
+├── en-us-localization-rules.md
+├── en-us-prompt-template.md
 ├── paletx-design-system-copy-spec.md
+├── paletx-english-appendix.md
 ├── system-prompt-patterns.md
 ├── change-list-schema.md
 ├── coverage-gap-schema.md
@@ -92,7 +99,8 @@ python3 /path/to/skill-creator/scripts/quick_validate.py /absolute/path/to/proto
 | [完整使用手册](docs/README.md) | 模式、加载策略和输出格式。 |
 | [版本记录](docs/VERSION_HISTORY.md) | v2 迁移说明与历史变更。 |
 | [维护指南](CONTRIBUTING.md) | 规则、来源、预算和 PR 要求。 |
-| [回归用例](evals/evals.json) | 默认直出、显式来源规则、清单与治理行为。 |
+| [回归用例](evals/evals.json) | 默认直出、显式来源规则、en-US/PX 与治理行为。 |
+| [en-US 测试集](evals/en-us-localization-tests.md) | 英语规则、双语语义、格式、组件语境及 PX 优先级用例。 |
 | [Token 预算](evals/token-budgets.json) | 主文件与典型运行路径的预算上限。 |
 
 请勿提交凭据、内部系统地址、未授权截图、内部文档正文或未经确认的业务、法务与安全口径。

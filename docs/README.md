@@ -1,13 +1,13 @@
 # 原型界面文案审查 Skill
 
-> **版本：v2.0.0**
-> **用途：** 审查简体中文 UI 文案，并以尽量小的规则上下文输出可验证、可执行的修改建议。
+> **版本：v2.1.0**
+> **用途：** 审查简体中文及目标 locale 明确为 en-US 的 UI 文案，并以尽量小的规则上下文输出可验证、可执行的修改建议。
 
 ## 适用范围
 
 Skill 适用于 Web、移动端、后台、小程序和桌面端的用户可见文本，包括标题、导航、字段、占位符、按钮、弹窗、帮助说明、状态、成功/失败反馈、空状态与风险提示。输入可以是截图、原型链接、录屏、文案表格、PRD 或混合材料。
 
-它不处理翻译与本地化、营销长文案、视觉与交互走查或代码中的 i18n 资源治理。无法验证的业务、技术、安全、法务和品牌口径标记为“待确认”。
+它支持 en-US 用户可见 UI 文案的本地化质量审查，但不提供从中文翻译成英文的服务，也不默认审查其他英语 locale。它不处理营销长文案、视觉与交互走查或代码中的 i18n 资源治理。无法验证的业务、技术、安全、法务和品牌口径标记为“待确认”。
 
 ## 执行模式
 
@@ -25,8 +25,9 @@ Skill 适用于 Web、移动端、后台、小程序和桌面端的用户可见�
 |---|---|
 | `hf-core.md` | 每次审查加载。 |
 | HF 分类规则 | 只加载材料命中的分类。 |
+| en-US 规则 | 仅在用户/项目明确指定目标 locale 为 en-US 时加载；不将美国英语惯例套用到其他 locale。 |
 | 跨页面一致性 | 两个及以上相关页面/状态时启用。 |
-| `PX-` | 明确指定 PaletX/ZTE 或项目已确认采用时加载。 |
+| `PX-` | 明确指定 PaletX/ZTE 或项目已确认采用时加载；en-US 目标另按需加载 PX 英文附录。 |
 | `SPT-` | 明确指定系统产品提示信息规范、常用句型或 `SPT-` 时加载；一般反馈使用 HF。 |
 | 项目规则 | 提供有效项目规范、术语表或合规口径时加载。 |
 | `COPY-` | 明确要求修改清单、Markdown 导出或给开发替换时生成。 |
@@ -45,6 +46,8 @@ Skill 适用于 Web、移动端、后台、小程序和桌面端的用户可见�
 | 动作、状态、反馈、校验、风险 | `hf-state-feedback.md` | `HF-STA-*`、`HF-FBK-*` |
 | 术语、标题、按钮、字段、占位符 | `hf-terminology-components.md` | `HF-TERM-*`、`HF-CMP-*` |
 | 语法、语气、可读性 | `hf-language.md` | `HF-LNG-*` |
+| 目标 locale 为 en-US | `en-us-localization-rules.md` | `EN-US-*` |
+| en-US + PaletX/ZTE | `paletx-english-appendix.md` | `PX-WIZ-*`、`PX-ALM-*`、`PX-CTR-*`、`PX-LEX-*`、`PX-PAT-*`、`PX-UI-*` |
 
 “完整审查”表示完整检查材料实际包含的类型，而不是机械加载全部规则文件。
 
@@ -123,7 +126,10 @@ HF 通用规则
 | `references/hf-state-feedback.md` | 动作、状态与反馈。 |
 | `references/hf-terminology-components.md` | 术语、命名与组件。 |
 | `references/hf-language.md` | 语法、语气与可读性。 |
+| `references/en-us-localization-rules.md` | 用户或项目指定目标 locale 为 en-US。 |
+| `references/en-us-prompt-template.md` | 配置 en-US 本地化审查助手。 |
 | `references/paletx-design-system-copy-spec.md` | 明确使用 PaletX/ZTE。 |
+| `references/paletx-english-appendix.md` | 同时采用 PaletX/ZTE 且目标 locale 为英语时。 |
 | `references/system-prompt-patterns.md` | 明确使用 SPT 来源规范。 |
 | `references/change-list-schema.md` | 用户要求 Markdown 修改清单。 |
 | `references/coverage-gap-schema.md` | 用户要求规范治理。 |
@@ -131,6 +137,7 @@ HF 通用规则
 | `references/source-register.md` | 来源核验、冲突或维护。 |
 | `docs/VERSION_HISTORY.md` | 版本与迁移记录。 |
 | `evals/evals.json` | 行为回归。 |
+| `evals/en-us-localization-tests.md` | en-US 与 PX 英文专题回归用例集。 |
 | `evals/trigger-eval.json` | 触发准确率回归。 |
 | `evals/token-budgets.json` | Token 预算定义。 |
 | `scripts/validate_token_budget.py` | Token 预算校验器。 |

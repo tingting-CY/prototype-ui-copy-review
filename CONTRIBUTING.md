@@ -22,7 +22,9 @@
 - `references/hf-state-feedback.md`：`HF-STA-*`、`HF-FBK-*`。
 - `references/hf-terminology-components.md`：`HF-TERM-*`、`HF-CMP-*`。
 - `references/hf-language.md`：`HF-LNG-*`。
-- `references/paletx-design-system-copy-spec.md`、`system-prompt-patterns.md`：显式启用的来源规则。
+- `references/en-us-localization-rules.md`：仅目标 locale 明确为 en-US 时加载的英语规则。
+- `references/en-us-prompt-template.md`：en-US 自定义助手提示词扩展。
+- `references/paletx-design-system-copy-spec.md`、`paletx-english-appendix.md`、`system-prompt-patterns.md`：显式启用的来源规则；PX 英文附录仅与 en-US PX 审查同时加载。
 - `references/change-list-schema.md`、`coverage-gap-schema.md`：按需交付 schema。
 - `references/source-register.md`：来源和维护状态，不承载运行规则。
 
@@ -68,3 +70,5 @@ git diff --check
 `validate_token_budget.py` 使用 `tiktoken==0.14.0` 与 `o200k_base`。不要仅提高预算来让 CI 通过；先说明增加成本的必要性，并优先拆分或按需加载。
 
 修改 `SKILL.md`、description 或路由时，对比 `evals/evals.json` 与 `evals/trigger-eval.json`。PR 应说明：问题与动机、改动范围、兼容性、规则/来源依据、校验结果、token 变化和敏感信息复核。
+
+en-US 规则修改还应更新 `evals/en-us-localization-tests.md`；PX 英文专题须注明来源是否已在线核验，并确保通用 en-US 建议不会覆盖已确认且适用的 PX 规则。不得将用户截图或未经授权的项目文案提交到公开仓库。
