@@ -1,5 +1,6 @@
 ---
 name: prototype-ui-copy-review
+metadata: {version: "2.1.1"}
 description: 审查简体中文与美国英语（en-US）用户可见 UI 文案的规范性和一致性，适用于原型、界面截图、录屏、文案清单或 PRD；检查标题、字段、按钮、提示、术语、格式和跨页一致性。目标 locale 明确为 en-US 时加载英文规则包；指定 PaletX/ZTE 时加载 PX 来源规则。用户要求检查、审查或 review 界面文字，或询问少量 UI 文案是否合规时使用。不用于中译英翻译、营销写作、视觉/交互审查、i18n 代码治理；英语地区未指定时仅澄清 locale。
 ---
 

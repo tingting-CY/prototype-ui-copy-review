@@ -10,7 +10,7 @@
     {
       "name": "skill_body",
       "files": ["SKILL.md"],
-      "max_tokens": 1800
+      "max_tokens": 1810
     },
     {
       "name": "single_punctuation",
