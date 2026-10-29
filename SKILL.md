@@ -1,7 +1,7 @@
 ---
 name: prototype-ui-copy-review
-metadata: {version: "2.1.1"}
-description: 审查简体中文与美国英语（en-US）用户可见 UI 文案的规范性和一致性，适用于原型、界面截图、录屏、文案清单或 PRD；检查标题、字段、按钮、提示、术语、格式和跨页一致性。目标 locale 明确为 en-US 时加载英文规则包；指定 PaletX/ZTE 时加载 PX 来源规则。用户要求检查、审查或 review 界面文字，或询问少量 UI 文案是否合规时使用。不用于中译英翻译、营销写作、视觉/交互审查、i18n 代码治理；英语地区未指定时仅澄清 locale。
+metadata: {version: "2.3.1"}
+description: 审查简体中文与明确指定 en-US 的用户可见 UI 文案，适用于原型、截图、流程和文案清单；也可从 JSON/YAML/properties i18n 资源提取文案并关联 key、locale 与文件位置。用户要求 UI 文案审查、i18n 文案提取或中英对照时使用。不用于中译英翻译、营销写作、视觉/交互审查或代码实现走查；英语地区未指定时仅澄清 locale。
 ---
 
 # UI 文案审查
@@ -48,10 +48,12 @@ description: 审查简体中文与美国英语（en-US）用户可见 UI 文案�
 | 术语、标题、字段、按钮、占位符、组件 | [`references/hf-terminology-components.md`](references/hf-terminology-components.md) |
 | 语法、语气、可读性 | [`references/hf-language.md`](references/hf-language.md) |
 | 明确指定 PaletX/ZTE | [`references/paletx-design-system-copy-spec.md`](references/paletx-design-system-copy-spec.md)；目标为 en-US 时另读 [`references/paletx-english-appendix.md`](references/paletx-english-appendix.md)，适用 PX 优先于通用 en-US 建议。 |
+| PaletX 数据格式 | [`PX-DAT`](references/paletx-data-format-appendix.md) |
 | 目标 locale 明确为 en-US | [`references/en-us-localization-rules.md`](references/en-us-localization-rules.md) |
 | 明确指定系统提示信息规范/SPT | [`references/system-prompt-patterns.md`](references/system-prompt-patterns.md) |
 | 要求 Markdown 修改清单 | [`references/change-list-schema.md`](references/change-list-schema.md) |
 | 要求规范缺口治理 | [`references/coverage-gap-schema.md`](references/coverage-gap-schema.md) |
+| 提供 i18n 资源或要求从代码提取文案 | [`references/i18n-resource-extraction.md`](references/i18n-resource-extraction.md)；使用 `scripts/extract_i18n.py` 提取 JSON/YAML/properties |
 | 配置自定义助手 | [`references/prompt-templates.md`](references/prompt-templates.md)（en-US 扩展见其链接） |
 | 核验或维护来源 | [`references/source-register.md`](references/source-register.md) |
 
@@ -59,7 +61,7 @@ description: 审查简体中文与美国英语（en-US）用户可见 UI 文案�
 
 ## 审查流程
 
-1. 提取页面、组件、状态、原文及可见限制。
+1. 提取页面、组件、状态、原文及可见限制；若输入是 i18n 资源，读取提取指南并保留 key 与源文件定位。
 2. 建立对象、动作、状态、格式和术语基线。
 3. 按组件语境应用已加载规则；合并同一根因的多处问题。
 4. 多页面时核对同一对象、动作和状态；仅在材料覆盖时检查入口、进行中、成功、失败、无结果、无权限、不可用和确认。
@@ -78,7 +80,3 @@ description: 审查简体中文与美国英语（en-US）用户可见 UI 文案�
 页面/流程审查先用一句话声明范围、规则和限制，再按优先级列问题。每项包含：**位置、原文、改为、依据、影响范围**。没有问题时说明未发现当前范围内的可验证问题。
 
 不要重复输出完整规则、推理过程或两份内容相同的“报告 + 清单”。用户要求极简交付时直接输出：`编号 | 优先级 | 位置 | 原文 | 修改后 | 依据`。
-
-## 维护
-
-修改本 Skill 时，按 [`CONTRIBUTING.md`](CONTRIBUTING.md) 同步 [`docs/README.md`](docs/README.md) 与 [`docs/VERSION_HISTORY.md`](docs/VERSION_HISTORY.md)，并运行结构、token 预算和回归校验。

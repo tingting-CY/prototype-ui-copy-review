@@ -1,6 +1,6 @@
 # 原型界面文案审查 Skill
 
-> **版本：v2.1.1**
+> **版本：v2.3.1**
 > **用途：** 审查简体中文及目标 locale 明确为 en-US 的 UI 文案，并以尽量小的规则上下文输出可验证、可执行的修改建议。
 
 ## 适用范围
@@ -128,13 +128,16 @@ HF 通用规则
 | `references/hf-language.md` | 语法、语气与可读性。 |
 | `references/en-us-localization-rules.md` | 用户或项目指定目标 locale 为 en-US。 |
 | `references/en-us-prompt-template.md` | 配置 en-US 本地化审查助手。 |
-| `references/paletx-design-system-copy-spec.md` | 明确使用 PaletX/ZTE。 |
+| `references/paletx-design-system-copy-spec.md` | 明确使用 PaletX/ZTE；数据格式涉及 `PX-DAT-*` 时核对数字、单位、空数据和表格呈现规则。 |
+| `references/paletx-data-format-appendix.md` | 明确使用 PaletX 且材料涉及进度、数值、单位、数据表、空值、脱敏或时间单位。 |
 | `references/paletx-english-appendix.md` | 同时采用 PaletX/ZTE 且目标 locale 为英语时。 |
 | `references/system-prompt-patterns.md` | 明确使用 SPT 来源规范。 |
 | `references/change-list-schema.md` | 用户要求 Markdown 修改清单。 |
 | `references/coverage-gap-schema.md` | 用户要求规范治理。 |
 | `references/prompt-templates.md` | 配置自定义助手或调用模板。 |
 | `references/source-register.md` | 来源核验、冲突或维护。 |
+| `references/i18n-resource-extraction.md` | 从 JSON/YAML/properties 资源提取静态 UI 文案，并保留 key/locale/源文件用于设计稿对照。 |
+| `scripts/extract_i18n.py` | i18n 静态字符串提取器；支持 JSON、YAML、`.properties`，可导出 JSONL/CSV。 |
 | `docs/VERSION_HISTORY.md` | 版本与迁移记录。 |
 | `evals/evals.json` | 行为回归。 |
 | `evals/en-us-localization-tests.md` | en-US 与 PX 英文专题回归用例集。 |

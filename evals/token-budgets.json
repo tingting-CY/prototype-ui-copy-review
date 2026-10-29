@@ -54,13 +54,13 @@
     },
     {
       "name": "source_registry_maintenance",
-      "files": ["SKILL.md", "references/source-register.md", "references/paletx-design-system-copy-spec.md", "references/system-prompt-patterns.md"],
-      "max_tokens": 7500
+      "files": ["SKILL.md", "references/source-register.md"],
+      "max_tokens": 4500
     },
     {
       "name": "all_hf_runtime_shards",
       "files": ["SKILL.md", "references/hf-core.md", "references/hf-punctuation.md", "references/hf-format.md", "references/hf-state-feedback.md", "references/hf-terminology-components.md", "references/hf-language.md"],
-      "max_tokens": 8000
+      "max_tokens": 8100
     },
     {
       "name": "en_us_localization_review",
@@ -77,6 +77,15 @@
       "files": ["SKILL.md", "references/prompt-templates.md", "references/en-us-prompt-template.md", "references/en-us-localization-rules.md"],
       "max_tokens": 9500
     },
-    {"name": "en_us_page_with_change_list", "files": ["SKILL.md", "references/hf-core.md", "references/en-us-localization-rules.md", "references/change-list-schema.md"], "max_tokens": 8000}
+    {
+      "name": "en_us_page_with_change_list",
+      "files": ["SKILL.md", "references/hf-core.md", "references/en-us-localization-rules.md", "references/change-list-schema.md"],
+      "max_tokens": 8000
+    },
+    {
+      "name": "paletx_data_format_review",
+      "files": ["SKILL.md", "references/hf-core.md", "references/hf-format.md", "references/paletx-design-system-copy-spec.md", "references/paletx-data-format-appendix.md"],
+      "max_tokens": 10000
+    }
   ]
 }

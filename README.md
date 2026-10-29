@@ -2,7 +2,7 @@
 
 > 面向原型、界面截图、页面流程、录屏、文案清单与 PRD 的**简体中文及明确限定 en-US 的 UI 文案规范性与一致性审查 Skill**。
 
-当前源码版本为 **v2.1.1**。本版本在保留 v2 按需加载架构的基础上，新增 en-US 用户可见 UI 本地化审查、独立语言规则包及 PaletX 英文专题附录，并修订英文审查路由和行为评测；普通请求仍只读取材料命中的规则分片。
+当前源码版本为 **v2.3.1**。在 en-US 审查和 i18n 资源提取基础上，补充通用数据格式规则及 PaletX `PX-DAT-04` 至 `PX-DAT-13`，覆盖数值、单位、表格呈现、空数据、读取失败/不适用与真实零值；来源截图未提交至仓库。
 
 ## 能力
 
@@ -11,6 +11,8 @@
 | 少量文案问答 | 对 1–5 条明确 UI 文案直接返回“结论、依据、建议”。 |
 | 页面与流程审查 | 检查标题、字段、按钮、弹窗、术语、标点、格式、状态反馈、风险和跨页一致性。 |
 | en-US 本地化审查 | 用户/项目明确指定 `en-US` 时加载美式英语语言规则；不默认覆盖其他英语 locale，也不代替翻译服务。 |
+| i18n 资源提取 | 静态提取 JSON、YAML、`.properties` 字符串并保留 key、locale、源文件与原文，可供设计稿对照审查。 |
+| 数据格式审查 | PaletX 启用时按 `PX-DAT-*` 检查数据表达、单位、表格格式及空数据/零值区分；不推断未定义的技术含义。 |
 | 分层规则 | 支持项目规则、PaletX/ZTE（`PX-`）、系统提示信息来源规范（`SPT-`）与通用高频规则（`HF-`）。 |
 | 可执行清单 | 用户要求时生成带 `COPY-` 编号的 Markdown 替换清单。 |
 | 规范治理 | 用户要求补规范时，以 `UC-` 记录现有规则无法唯一判定的真实场景。 |
@@ -42,9 +44,13 @@
 
 按 PaletX 设计系统审查成员邀请流程，重点检查术语和按钮。
 
+按 PaletX 数据格式规则检查表格里的空数据、读取失败和真实零值是否混淆。
+
 按系统产品提示信息规范检查这些失败提示。
 
 完整审查这批页面，并生成给开发直接替换的 Markdown 清单。
+
+从 `src/locales` 提取 en-US 文案，保留 key 和文件位置，供设计稿文案审查。
 
 找出这些页面尚未被规范覆盖的文案场景，给出补规则建议。
 ```
@@ -72,12 +78,14 @@ references/
 ├── en-us-localization-rules.md
 ├── en-us-prompt-template.md
 ├── paletx-design-system-copy-spec.md
+├── paletx-data-format-appendix.md
 ├── paletx-english-appendix.md
 ├── system-prompt-patterns.md
 ├── change-list-schema.md
 ├── coverage-gap-schema.md
 ├── prompt-templates.md
-└── source-register.md
+├── source-register.md
+├── i18n-resource-extraction.md
 ```
 
 原有 75 个 `HF-` 规则编号在 v2 中全部保留，仅改变文件组织方式。详细使用方式见[完整使用手册](docs/README.md)，兼容性说明见[版本记录](docs/VERSION_HISTORY.md)。
@@ -102,6 +110,9 @@ python3 /path/to/skill-creator/scripts/quick_validate.py /absolute/path/to/proto
 | [回归用例](evals/evals.json) | 默认直出、显式来源规则、en-US/PX 与治理行为。 |
 | [en-US 测试集](evals/en-us-localization-tests.md) | 英语规则、双语语义、格式、组件语境及 PX 优先级用例。 |
 | [Token 预算](evals/token-budgets.json) | 主文件与典型运行路径的预算上限。 |
+| [i18n 提取器](scripts/extract_i18n.py) | 静态提取 JSON/YAML/properties 文案的命令行工具。 |
+| [PaletX 设计系统规则](references/paletx-design-system-copy-spec.md) | PaletX 通用规则及按需加载入口。 |
+| [PaletX 数据格式附录](references/paletx-data-format-appendix.md) | `PX-DAT-04` 至 `PX-DAT-13`；原始指南截图未放入仓库。 |
 
 请勿提交凭据、内部系统地址、未授权截图、内部文档正文或未经确认的业务、法务与安全口径。
 

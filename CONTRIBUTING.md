@@ -24,9 +24,10 @@
 - `references/hf-language.md`：`HF-LNG-*`。
 - `references/en-us-localization-rules.md`：仅目标 locale 明确为 en-US 时加载的英语规则。
 - `references/en-us-prompt-template.md`：en-US 自定义助手提示词扩展。
-- `references/paletx-design-system-copy-spec.md`、`paletx-english-appendix.md`、`system-prompt-patterns.md`：显式启用的来源规则；PX 英文附录仅与 en-US PX 审查同时加载。
+- `references/paletx-design-system-copy-spec.md`、`paletx-english-appendix.md`、`paletx-data-format-appendix.md`、`system-prompt-patterns.md`：显式启用的来源规则；PX 英文附录仅与 en-US PX 审查同时加载，数据格式附录仅在相关任务中加载。
 - `references/change-list-schema.md`、`coverage-gap-schema.md`：按需交付 schema。
 - `references/source-register.md`：来源和维护状态，不承载运行规则。
+- `references/i18n-resource-extraction.md` 与 `scripts/extract_i18n.py`：静态本地化资源提取协议和 JSON/YAML/properties 提取工具；提取不修改源资源，不推断组件映射。
 
 规则只维护在一个位置。不要在 `SKILL.md`、Prompt、README 和 schema 中复制规则正文。
 
@@ -48,6 +49,8 @@
 
 外部来源同步登记来源 ID、名称、公开地址、提取日期、版本、覆盖范围、状态和维护规则。内部或受限来源不得公开 URL、正文、截图、账号或访问路径，只保留脱敏元数据。发现安全问题时不要通过公开 Issue 或 PR 暴露细节。
 
+维护 PaletX 数据格式规则时使用稳定的 `PX-DAT-*` 编号，并在来源登记中区分网页在线核验与截图提炼状态。不得将原始截图提交到公开仓库；对未定义的技术含义、精度、locale 或产品占位符语义保留待确认边界。
+
 ## 版本
 
 修改 `SKILL.md`、规则、Prompt、输出、脚本或默认行为时更新 `docs/VERSION_HISTORY.md`；影响使用方式时同步根目录和 `docs/README.md`。
@@ -68,6 +71,7 @@ git diff --check
 ```
 
 `validate_token_budget.py` 使用 `tiktoken==0.14.0` 与 `o200k_base`。不要仅提高预算来让 CI 通过；先说明增加成本的必要性，并优先拆分或按需加载。
+修改 i18n 提取器时，更新 `scripts/test_extract_i18n.py`，覆盖格式解析、locale/key 保留、过滤与错误边界；不得将用户项目资源或导出的文案样本提交到仓库。
 
 修改 `SKILL.md`、description 或路由时，对比 `evals/evals.json` 与 `evals/trigger-eval.json`。PR 应说明：问题与动机、改动范围、兼容性、规则/来源依据、校验结果、token 变化和敏感信息复核。
 

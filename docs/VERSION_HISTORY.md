@@ -1,8 +1,8 @@
 # 原型界面文案审查 Skill：版本更新记录
 
 > 文档状态：当前生效  
-> 当前版本：**v2.1.1**
-> 更新日期：2026-10-19（GMT+8）
+> 当前版本：**v2.3.1**
+> 更新日期：2026-10-29（GMT+8）
 > 适用对象：`prototype-ui-copy-review` Skill 及其参考规则、模板和来源登记。
 
 ## 版本策略
@@ -15,6 +15,9 @@
 
 | 版本 | 日期 | 类型 | 核心变化 | 兼容性 |
 |---|---|---|---|---|
+| v2.3.1 | 2026-10-29 | 修订版本 | 将 PaletX 数据格式页面截图中的可读规则归入 `PX-DAT-04` 至 `PX-DAT-13`；区分空数据、读取失败/不适用与真实零值，并记录规则例外和在线来源状态。 | 向后兼容；仅在 PaletX 规则启用时加载。 |
+| v2.3.0 | 2026-10-29 | 次版本 | 扩充 HF 通用数据格式规则，覆盖 locale 格式、货币、百分比、精度、单位及标识符；登记 PaletX 数据格式页面待在线复核状态。 | 向后兼容；不擅自覆盖 locale、技术或项目口径。 |
+| v2.2.0 | 2026-10-21 | 次版本 | 新增 JSON/YAML/properties i18n 文案提取器，保留 key、locale、源文件和原文，支持与设计稿对照。 | 向后兼容；不修改源资源，不推断组件映射。 |
 | v2.1.1 | 2026-10-19 | 修订版本 | 统一英文模板默认行为、语言资源路由、规则引用与双语清单；增加行为评测执行器。 | 向后兼容。 |
 | v2.1.0 | 2026-10-19 | 次版本 | 新增目标 locale 明确为 en-US 的 UI 本地化审查、独立英语规则与提示词、PX 英文专题附录及回归用例。 | 向后兼容；原有简体中文审查路径与默认行为不变。 |
 | v2.0.0 | 2026-09-17 | 主版本 | 默认直接审查；HF 规则按类型分片；PX/SPT、COPY 与 UC 改为显式加载；新增 token 预算 CI。 | 不兼容；依赖旧自动确认、自动 SPT、自动清单或自动 UC 的调用方需显式声明。 |
@@ -37,6 +40,42 @@
 ---
 
 ## 详细更新记录
+
+### v2.3.1 · PaletX 数据格式规则
+
+**变更原因。** 根据 PaletX 数据格式指南页面截图补齐来源数据表达和呈现规则，并避免把通用建议误标成设计系统要求。
+
+**新增内容。** 新增 `PX-DAT-04` 至 `PX-DAT-13`，涵盖进度、数字精度、百分比、单位、表格对齐和单位位置、量级、空数据/读取失败/不适用/零值、敏感信息脱敏及时间单位。对截图未定义的进位基数、精度含义、产品占位符语义和 en-US 单复数冲突明确保留边界；公开仓库不收录截图文件。
+
+**受影响文件。** `SKILL.md`、`references/paletx-design-system-copy-spec.md`、`references/paletx-data-format-appendix.md`、`references/source-register.md`、根 README、`docs/README.md`、`docs/VERSION_HISTORY.md`、`evals/evals.json`、`evals/token-budgets.json`、`scripts/validate_skill_consistency.py`、`CONTRIBUTING.md`。
+
+**兼容性。** 向后兼容；仅用户/项目明确启用 PaletX 时加载来源规则，不改变中文、en-US、i18n 提取或默认审查行为。
+
+**校验状态。** 严格结构校验 11 项通过；17 组 token 预算、Skill Creator 校验、JSON 解析、11 项脚本单元测试、PX-DAT-11 夹具断言及 `git diff --check` 通过。本次未运行模型行为评测。
+
+### v2.3.0 · 通用数据格式规则扩充
+
+**变更原因。** 补齐 locale 敏感数字、货币、百分比、精度、单位和标识符审查，并登记 PaletX 数据格式页面来源状态，避免以通用建议冒充 PX 原文。
+
+**受影响文件。** `references/hf-format.md`、`references/source-register.md`、`SKILL.md`。
+
+**兼容性。** 向后兼容；只在数据格式相关审查中按需加载。
+
+**校验状态。** 与 v2.3.1 一并验证。
+
+### v2.2.0 · i18n 资源提取与设计稿对照
+
+**变更原因。** 支持从项目本地化资源中提取可见文案，并以稳定 key 和源文件位置关联设计材料，便于代码与设计稿协同审查。
+
+**新增内容。** 增加 `scripts/extract_i18n.py`，支持静态 JSON、YAML、Java `.properties` 资源，输出 JSONL/CSV，包含 key、locale、source_file 和原文；增加提取与设计稿对照指南及单元测试。
+
+**受影响文件。** `SKILL.md`、根目录与 `docs/README.md`、`docs/VERSION_HISTORY.md`、`CONTRIBUTING.md`、`references/i18n-resource-extraction.md`、`scripts/extract_i18n.py`、`scripts/test_extract_i18n.py`、`scripts/validate_skill_consistency.py`、`evals/trigger-eval.json`。
+
+**边界。** 不修改源资源、不自动翻译、不推断组件语境；不支持的 JS/TS 动态资源、JSONC、运行时拼接、远程文案明确标记为工具覆盖范围之外。未知 locale 不从文案本身猜测。
+
+**兼容性。** 向后兼容，不改变既有审查规则、编号、严重度或默认输出。
+
+**校验状态。** 严格结构校验 11 项、16 组 token 预算、Skill Creator 校验、JSON 解析和 `git diff --check` 通过；11 项脚本单元测试通过（含 JSONL CLI 冒烟测试）。本次未运行模型行为评测。
 
 ### v2.1.1 · 英文审查一致性修正
 

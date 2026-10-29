@@ -21,5 +21,6 @@
   {"query": "帮我校对这篇公众号文章（约 3000 字）的错别字和标点，语气不用改", "should_trigger": false},
   {"query": "这个 Markdown 修改清单（ui-copy-change-list.md）帮我转成 Jira 可导入的 CSV，字段映射按 Summary/Description/Priority", "should_trigger": false},
   {"query": "我们 Android 客户端的 strings.xml 有一堆重复 key 和没用到的资源，帮我写个脚本去重并清理", "should_trigger": false},
-  {"query": "请按 en-US 规则审查这张后台设置页面截图中的英文按钮、表单标签和空状态文案，并列出可直接修改项。", "should_trigger": true}
+  {"query": "请按 en-US 规则审查这张后台设置页面截图中的英文按钮、表单标签和空状态文案，并列出可直接修改项。", "should_trigger": true},
+  {"query": "从 src/locales 下提取 JSON 翻译资源中的界面文案，保留 key、locale 和文件路径，之后和 Figma 设计稿逐项核对。", "should_trigger": true}
 ]

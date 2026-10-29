@@ -1,6 +1,6 @@
 # PaletX 文案规范：结构化审查基线
 
-> **来源：** [PaletX · 指引 · 文案](https://paletx.zte.com.cn/#/guide/office-document)，提取于 2026-08-19。仅覆盖已核实条目，适用于简体中文与面向全球用户的美式英语界面；项目、法务和安全规范优先。
+> **来源：** [PaletX · 指引 · 文案](https://paletx.zte.com.cn/#/guide/office-document)，提取于 2026-08-19；数据格式专题依据用户提供的 PaletX 页面截图于 2026-10-29 核对。数据格式网页本身未能在线解析，页面版本/最新性未确认。仅覆盖已核实条目，适用于简体中文与面向全球用户的美式英语界面；项目、法务和安全规范优先。
 
 仅当用户或项目明确采用 PaletX/ZTE 时读取本文件并引用 `PX-`。组件语境不足时不要强行应用；仅在核验最新来源、处理冲突或维护规则时读取 `source-register.md`。
 
@@ -43,6 +43,8 @@
 
 ## 4. 标点、时间和数据格式
 
+`PX-DAT-04` 至 `PX-DAT-13` 已拆为按需加载的 [PaletX 数据格式附录](paletx-data-format-appendix.md)，仅在数据格式相关任务读取。规则根据截图可辨认内容提炼；来源及在线核验状态见来源登记。
+
 | 规则 ID | 可判定要求 | 审查示例 | 例外/说明 |
 |---|---|---|---|
 | PX-PUN-01 | 中文界面使用中文标点，英文界面使用英文标点。英文逗号、冒号、句号后空一格；不推荐分号；连字符前后不留空格。 | `A maximum of 25 servers … (5 at most).` | URL、路径、代码、版本号和外部原值按其技术格式保留。 |
@@ -71,7 +73,7 @@
 
 ## 审查输出规则
 
-在报告中，以 `PX-` 编号注明设计系统依据；再给出原文、位置、问题和直接修改建议。不可将产品未定义的术语、技术参数或安全口径按本文件擅自改写。遇到已核实且适用的 PX 规则与通用规则冲突时，使用 PX；英语专题见 `paletx-english-appendix.md`。中文基础问题按 `SKILL.md` 读取命中的 HF 分片。
+在报告中，以 `PX-` 编号注明设计系统依据；再给出原文、位置、问题和直接修改建议。不可将产品未定义的术语、技术参数或安全口径按本文件擅自改写。遇到已核实且适用的 PX 规则与通用规则冲突时，使用 PX；英语专题见 `paletx-english-appendix.md`，数据格式专题见 `paletx-data-format-appendix.md`。中文基础问题按 `SKILL.md` 读取命中的 HF 分片。
 
 ## 维护触发条件
 
@@ -80,3 +82,4 @@
 ## References
 
 [1]: https://paletx.zte.com.cn/#/guide/office-document "PaletX · 文案规范"
+[2]: https://paletx.zte.com.cn/#/guide/data-format "PaletX · 数据格式"
